@@ -11,8 +11,8 @@ from common import *
 @pytest.fixture(scope='function')
 def stor():
     DB = 'a'
-    shutil.rmtree(DB + '.lvl', True)
     d = LevelStore(DB)
+    d.clear()
     yield d
     d.close()
     shutil.rmtree(DB + '.lvl', True)

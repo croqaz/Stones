@@ -18,12 +18,12 @@ class LmdbStore(Base):
 
     __slots__ = ('db', 'table')
 
-    def __init__(self, name, table=b''):
+    def __init__(self, name, table=None, iterable=tuple(), **kwargs):
         super().__init__()
-        self.table = None
         self.db = lmdb.open(name + '.lmdb', max_dbs=9, map_size=8e12)
-        if table:
-            self.table = self.db.open_db(table)
+        self.table = self.db.open_db(table)
+        if iterable or kwargs:
+            self._populate(iterable, **kwargs)
 
     def close(self):
         self.db.close()
@@ -88,3 +88,7 @@ class LmdbStore(Base):
 
     def update(self, iterable=tuple(), **kwargs):
         self._populate(iterable, **kwargs)
+
+    def clear(self):
+        with self.db.begin(write=True) as txn:
+            txn.drop(self.table, delete=False)

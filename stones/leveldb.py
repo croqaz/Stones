@@ -16,11 +16,12 @@ class LevelStore(Base):
     Keys and values MUST be byte strings.
     """
 
-    __slots__ = 'db'
+    __slots__ = ('db', '_name')
 
     def __init__(self, name, iterable=tuple(), **kwargs):
         super().__init__()
-        self.db = plyvel.DB(name + '.lvl', create_if_missing=True)
+        self._name = name + '.lvl'
+        self.db = plyvel.DB(self._name, create_if_missing=True)
         if iterable or kwargs:
             self._populate(iterable, **kwargs)
 
@@ -80,3 +81,8 @@ class LevelStore(Base):
 
     def update(self, iterable=tuple(), **kwargs):
         self._populate(iterable, **kwargs)
+
+    def clear(self):
+        self.close()
+        plyvel.destroy_db(self._name)
+        self.db = plyvel.DB(self._name, create_if_missing=True)
