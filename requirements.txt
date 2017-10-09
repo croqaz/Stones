@@ -1,0 +1,23 @@
+
+# Dev lint code
+flake8
+# Dev test code
+pytest
+
+# UJSON (optional)
+ujson
+
+# CBOR2 (optional)
+cbor2
+
+# Msgpack (optional)
+msgpack-python
+
+# LevelDB (optional)
+plyvel
+
+# LMDB (optional)
+lmdb
+
+# Python-redis (optional)
+python_redis
