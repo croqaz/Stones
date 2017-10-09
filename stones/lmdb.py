@@ -25,13 +25,13 @@ class LmdbStore(Base):
         with self.db.begin(db=self.table) as txn:
             return txn.get(key, default)
 
-    def put(self, key, data, overwrite=False):
+    def put(self, key, value, overwrite=False):
         with self.db.begin(write=True, db=self.table) as txn:
-            txn.put(key, data, dupdata=False, overwrite=overwrite)
+            txn.put(key, value, dupdata=False, overwrite=overwrite)
 
     def delete(self, key):
         with self.db.begin(write=True, db=self.table) as txn:
-            txn.delete(key)
+            return txn.delete(key)
 
     def __getitem__(self, key):
         with self.db.begin(db=self.table) as txn:
@@ -39,7 +39,7 @@ class LmdbStore(Base):
 
     def __setitem__(self, key, value):
         with self.db.begin(write=True, db=self.table) as txn:
-            txn.put(key, data, dupdata=False)
+            txn.put(key, value, dupdata=False)
 
     __delitem__ = delete
 
@@ -53,5 +53,4 @@ class LmdbStore(Base):
 
     def __iter__(self):
         with self.db.begin(db=self.table) as txn:
-            for key in txn.cursor().iternext(keys=True, values=False):
-                yield key
+            yield from txn.cursor().iternext(keys=True, values=False)

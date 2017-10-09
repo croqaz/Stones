@@ -27,7 +27,7 @@ class LevelStore(Base):
         self.db.put(key, value)
 
     def delete(self, key):
-        self.db.delete(key)
+        return self.db.delete(key)
 
     def __getitem__(self, key):
         return self.db.get(key)

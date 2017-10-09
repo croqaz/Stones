@@ -1,4 +1,4 @@
 
 from .leveldb import LevelStore
 from .lmdb import LmdbStore
-# from .redis import RedisStore
+from .redis import RedisStore
