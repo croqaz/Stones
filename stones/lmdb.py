@@ -1,4 +1,6 @@
 
+import itertools
+import contextlib
 from .base import Base
 
 try:
@@ -10,19 +12,30 @@ except ModuleNotFoundError:
 
 class LmdbStore(Base):
     """
-    LMDB container compatible with Python dicts.
+    LMDB ‘Lightning’ Database container, compatible with Python dicts.
+    Keys and values MUST be byte strings.
     """
 
     __slots__ = ('db', 'table')
 
     def __init__(self, name, table=b''):
-        self.db = lmdb.open(name + '.lmdb', max_dbs=9, map_size=8e12)
+        super().__init__()
         self.table = None
+        self.db = lmdb.open(name + '.lmdb', max_dbs=9, map_size=8e12)
         if table:
             self.table = self.db.open_db(table)
 
     def close(self):
         self.db.close()
+
+
+    def _populate(self, iterable=tuple(), **kwargs):
+        with contextlib.suppress(AttributeError):
+            iterable = iterable.items()
+        with self.db.begin(write=True, db=self.table) as txn:
+            for key, value in itertools.chain(iterable, kwargs.items()):
+                txn.put(key, value, dupdata=False)
+
 
     def get(self, key, default=None):
         with self.db.begin(db=self.table) as txn:
@@ -36,6 +49,7 @@ class LmdbStore(Base):
         with self.db.begin(write=True, db=self.table) as txn:
             return txn.delete(key)
 
+
     def __getitem__(self, key):
         with self.db.begin(db=self.table) as txn:
             return txn.get(key)
@@ -45,6 +59,7 @@ class LmdbStore(Base):
             txn.put(key, value, dupdata=False)
 
     __delitem__ = delete
+
 
     def __contains__(self, key):
         with self.db.begin(db=self.table) as txn:
@@ -57,3 +72,19 @@ class LmdbStore(Base):
     def __iter__(self):
         with self.db.begin(db=self.table) as txn:
             yield from txn.cursor().iternext(keys=True, values=False)
+
+    def __repr__(self):
+        items = dict(self.items())
+        return self.__class__.__name__ + repr(items)
+
+
+    def items(self):
+        items_dict = {}
+        with self.db.begin(db=self.table) as txn:
+            for key, value in txn.cursor().iternext(keys=True, values=True):
+                items_dict[key] = value
+        return items_dict
+
+
+    def update(self, iterable=tuple(), **kwargs):
+        self._populate(iterable, **kwargs)

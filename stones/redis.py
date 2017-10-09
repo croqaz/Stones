@@ -1,31 +1,26 @@
 
-from .base import Base
 import itertools
 import contextlib
+from .base import Base
 
 
 class RedisStore(Base):
     """
     Redis-backed container compatible with Python dicts.
+    Keys and values MUST be byte strings.
     """
 
-    def __init__(self, redis, key, iterable=tuple(), **kwargs):
-        self._redis = redis
-        self._key = key
+    __slots__ = ('redis', 'redis_key')
+
+    def __init__(self, redis, redis_key, iterable=tuple(), **kwargs):
+        super().__init__()
+        self.redis = redis
+        self.redis_key = redis_key
         if iterable or kwargs:
             self._populate(iterable, **kwargs)
 
-
-    @property
-    def redis(self):
-        return self._redis
-
-    @property
-    def key(self):
-        return self._key
-
     def close(self):
-        self._redis.close()
+        self.redis.close()
 
 
     def _populate(self, iterable=tuple(), **kwargs):
@@ -36,41 +31,41 @@ class RedisStore(Base):
             hm_set.append(key)
             hm_set.append(self._encode(value))
         if hm_set:
-            self._redis.multi()
-            self._redis.hmset(self.key, *hm_set)
-            self._redis.exec()
+            self.redis.multi()
+            self.redis.hmset(self.redis_key, *hm_set)
+            self.redis.exec()
 
 
     def get(self, key, default=None):
         return self[key] if key in self else default
 
     def put(self, key, value, overwrite=False):
-        if not overwrite and self.redis.hget(self.key, key):
+        if not overwrite and self.redis.hget(self.redis_key, key):
             return
-        self.redis.hset(self.key, key, self._encode(value))
+        self.redis.hset(self.redis_key, key, self._encode(value))
 
     def delete(self, key):
-        return bool(self.redis.hdel(self.key, key))
+        return bool(self.redis.hdel(self.redis_key, key))
 
 
     def __getitem__(self, key):
-        encoded_value = self.redis.hget(self.key, key)
+        encoded_value = self.redis.hget(self.redis_key, key)
         return self._decode(encoded_value)
 
     def __setitem__(self, key, value):
-        self.redis.hset(self.key, key, self._encode(value))
+        self.redis.hset(self.redis_key, key, self._encode(value))
 
     __delitem__ = delete
 
 
     def __contains__(self, key):
-        return bool(self.redis.hexists(self.key, key))
+        return bool(self.redis.hexists(self.redis_key, key))
 
     def __len__(self):
-        return self.redis.hlen(self.key)
+        return self.redis.hlen(self.redis_key)
 
     def __iter__(self):
-        yield from self.redis.hkeys(self.key)
+        yield from self.redis.hkeys(self.redis_key)
 
     def __repr__(self):
         items = dict(self.items())
@@ -78,13 +73,13 @@ class RedisStore(Base):
 
 
     def keys(self):
-        return self.redis.hkeys(self.key)
+        return self.redis.hkeys(self.redis_key)
 
     def values(self):
-        return [self._decode(val) for val in self.redis.hvals(self.key)]
+        return [self._decode(val) for val in self.redis.hvals(self.redis_key)]
 
     def items(self):
-        items = self.redis.hgetall(self.key)
+        items = self.redis.hgetall(self.redis_key)
         keys = items[::2]
         vals = (self._decode(val) for val in items[1::2])
         return list(zip(keys, vals))
@@ -94,4 +89,4 @@ class RedisStore(Base):
         self._populate(iterable, **kwargs)
 
     def clear(self):
-        self.redis.delete(self.key)
+        self.redis.delete(self.redis_key)
