@@ -15,6 +15,7 @@ class RedisStore(Base):
         if iterable or kwargs:
             self._populate(iterable, **kwargs)
 
+
     @property
     def redis(self):
         return self._redis
@@ -25,6 +26,7 @@ class RedisStore(Base):
 
     def close(self):
         self._redis.close()
+
 
     def _populate(self, iterable=tuple(), **kwargs):
         hm_set = []
@@ -38,6 +40,7 @@ class RedisStore(Base):
             self._redis.hmset(self.key, *hm_set)
             self._redis.exec()
 
+
     def get(self, key, default=None):
         return self[key] if key in self else default
 
@@ -49,6 +52,7 @@ class RedisStore(Base):
     def delete(self, key):
         return bool(self.redis.hdel(self.key, key))
 
+
     def __getitem__(self, key):
         encoded_value = self.redis.hget(self.key, key)
         return self._decode(encoded_value)
@@ -57,6 +61,7 @@ class RedisStore(Base):
         self.redis.hset(self.key, key, self._encode(value))
 
     __delitem__ = delete
+
 
     def __contains__(self, key):
         return bool(self.redis.hexists(self.key, key))
@@ -71,6 +76,7 @@ class RedisStore(Base):
         items = dict(self.items())
         return self.__class__.__name__ + repr(items)
 
+
     def keys(self):
         return self.redis.hkeys(self.key)
 
@@ -83,14 +89,9 @@ class RedisStore(Base):
         vals = (self._decode(val) for val in items[1::2])
         return list(zip(keys, vals))
 
+
     def update(self, iterable=tuple(), **kwargs):
-        """
-        Update data in place.
-        """
         self._populate(iterable, **kwargs)
 
     def clear(self):
-        """
-        Remove all elements from a Redis-backed container.
-        """
         self.redis.delete(self.key)
