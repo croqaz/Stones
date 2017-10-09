@@ -13,10 +13,7 @@ class RedisStore(Base):
         self._redis = redis
         self._key = key
         if iterable or kwargs:
-            if self.redis.exists(self.key):
-                raise KeyExistsError(self.redis, self.key)
-            else:
-                self._populate(iterable, **kwargs)
+            self._populate(iterable, **kwargs)
 
     @property
     def redis(self):
@@ -37,9 +34,9 @@ class RedisStore(Base):
             hm_set.append(key)
             hm_set.append(self._encode(value))
         if hm_set:
-            self.redis.multi()
-            self.redis.hmset(self.key, *hm_set)
-            self.redis.exec()
+            self._redis.multi()
+            self._redis.hmset(self.key, *hm_set)
+            self._redis.exec()
 
     def get(self, key, default=None):
         return self[key] if key in self else default

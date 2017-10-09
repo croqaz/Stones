@@ -16,7 +16,7 @@ update:
 	${ENV}/pip install -U -r requirements.txt
 
 lint:
-	${ENV}/flake8 graphh
+	${ENV}/flake8 stones
 
 tests:
 	${ENV}/pytest -ra -s -v test/

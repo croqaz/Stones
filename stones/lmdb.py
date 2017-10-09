@@ -9,6 +9,9 @@ except ModuleNotFoundError:
 
 
 class LmdbStore(Base):
+    """
+    LMDB container compatible with Python dicts.
+    """
 
     __slots__ = ('db', 'table')
 

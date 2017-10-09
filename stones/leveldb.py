@@ -9,6 +9,9 @@ except ModuleNotFoundError:
 
 
 class LevelStore(Base):
+    """
+    LevelDB container compatible with Python dicts.
+    """
 
     __slots__ = 'db'
 
