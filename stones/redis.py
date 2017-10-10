@@ -12,8 +12,8 @@ class RedisStore(Base):
 
     __slots__ = ('redis', 'redis_key')
 
-    def __init__(self, redis, redis_key, iterable=tuple(), **kwargs):
-        super().__init__()
+    def __init__(self, redis, redis_key, encoder='cbor', iterable=tuple(), **kwargs):
+        super().__init__(encoder=encoder)
         self.redis = redis
         self.redis_key = redis_key
         if iterable or kwargs:

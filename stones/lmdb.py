@@ -18,8 +18,8 @@ class LmdbStore(Base):
 
     __slots__ = ('db', 'table')
 
-    def __init__(self, name, table=None, iterable=tuple(), **kwargs):
-        super().__init__()
+    def __init__(self, name, table=None, encoder='cbor', iterable=tuple(), **kwargs):
+        super().__init__(encoder=encoder)
         self.db = lmdb.open(name + '.lmdb', max_dbs=9, map_size=8e12)
         self.table = self.db.open_db(table)
         if iterable or kwargs:

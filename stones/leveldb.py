@@ -18,8 +18,8 @@ class LevelStore(Base):
 
     __slots__ = ('db', '_name')
 
-    def __init__(self, name, iterable=tuple(), **kwargs):
-        super().__init__()
+    def __init__(self, name, encoder='cbor', iterable=tuple(), **kwargs):
+        super().__init__(encoder=encoder)
         self._name = name + '.lvl'
         self.db = plyvel.DB(self._name, create_if_missing=True)
         if iterable or kwargs:

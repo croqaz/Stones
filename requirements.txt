@@ -4,14 +4,19 @@ flake8
 # Dev test code
 pytest
 
+
 # UJSON (optional)
 ujson
 
+# SimpleJson (optional)
+simplejson ~= 3.11
+
 # CBOR2 (optional)
-cbor2
+cbor2 ~= 4.0
 
 # Msgpack (optional)
-msgpack-python
+msgpack-python ~= 0.4
+
 
 # LevelDB (optional)
 plyvel
