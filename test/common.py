@@ -78,3 +78,8 @@ def check_delete(stor):
 
     assert stor.get(b'a') is None
     assert stor.get(b'x') is None
+
+
+def check_list_append(stor):
+
+    ...

@@ -10,6 +10,7 @@ except ModuleNotFoundError:
 
 try:
     import cbor2
+    from cbor2.types import CBORTag
 except ModuleNotFoundError:
     print('CBOR can be installed at PyPi.python.org/pypi/cbor2')
 
@@ -26,11 +27,17 @@ def decode_json(data):
     return json.loads(data)
 
 
+def _cbor_encoder(encoder, value):
+    encoder.encode(CBORTag(38, sorted(value)))
+
+def _cbor_decoder(decoder, tag, fp):
+    return set(tag.value)
+
 def encode_cbor(data):
-    return cbor2.dumps(data)
+    return cbor2.dumps(data, default=_cbor_encoder)
 
 def decode_cbor(data):
-    return cbor2.loads(data)
+    return cbor2.loads(data, tag_hook=_cbor_decoder)
 
 
 def encode_msgpack(data):
