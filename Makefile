@@ -18,5 +18,8 @@ update:
 lint:
 	${ENV}/flake8 stones
 
-tests:
-	${ENV}/pytest -ra -s -v test/
+coverage:
+	${ENV}/pytest --cov=stones tests/
+
+test:
+	${ENV}/pytest -ra --capture=no --verbose tests/

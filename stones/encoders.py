@@ -1,4 +1,6 @@
 
+import pickle
+
 try:
     import ujson as json
 except ModuleNotFoundError:
@@ -18,6 +20,13 @@ try:
     import msgpack
 except ModuleNotFoundError:
     print('MessagePack can be installed at PyPi.python.org/pypi/msgpack-python')
+
+
+def encode_pickle(data):
+    return pickle.dumps(data, protocol=pickle.HIGHEST_PROTOCOL, fix_imports=False)
+
+def decode_pickle(data):
+    return pickle.loads(data, fix_imports=False)
 
 
 def encode_json(data):
@@ -48,6 +57,10 @@ def decode_msgpack(data):
 
 
 encoders = {
+    'pickle': {
+        'encode': encode_pickle,
+        'decode': decode_pickle
+    },
     'json': {
         'encode': encode_json,
         'decode': decode_json

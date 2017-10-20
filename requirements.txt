@@ -3,6 +3,7 @@
 flake8
 # Dev test code
 pytest
+pytest-cov
 
 
 # UJSON (optional)
