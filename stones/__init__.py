@@ -10,7 +10,7 @@ from .exceptions import StoreException
 from .exceptions import EncodeException
 
 
-def stone(name, persistence='level', encoder='cbor'):
+def stone(name, persistence='level', encoder='pickle'):
     if encoder not in encoders:
         raise EncodeException(f'Invalid encoder name "{encoder}"')
     store_name = f'{persistence.title()}Store'
