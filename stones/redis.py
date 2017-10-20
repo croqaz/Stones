@@ -1,10 +1,10 @@
 
 import itertools
 import contextlib
-from .base import Base
+from .base import BaseStore
 
 
-class RedisStore(Base):
+class RedisStore(BaseStore):
     """
     Redis-backed container compatible with Python dicts.
     Keys and values MUST be byte strings.

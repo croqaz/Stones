@@ -1,7 +1,7 @@
 
 import itertools
 import contextlib
-from .base import Base
+from .base import BaseStore
 
 try:
     import plyvel
@@ -10,7 +10,7 @@ except ModuleNotFoundError:
     exit(1)
 
 
-class LevelStore(Base):
+class LevelStore(BaseStore):
     """
     LevelDB container compatible with Python dicts.
     Keys and values MUST be byte strings.

@@ -1,7 +1,7 @@
 
 import itertools
 import contextlib
-from .base import Base
+from .base import BaseStore
 
 try:
     import lmdb
@@ -10,7 +10,7 @@ except ModuleNotFoundError:
     exit(1)
 
 
-class LmdbStore(Base):
+class LmdbStore(BaseStore):
     """
     LMDB ‘Lightning’ Database container, compatible with Python dicts.
     Keys and values MUST be byte strings.

@@ -19,7 +19,7 @@ lint:
 	${ENV}/flake8 stones
 
 coverage:
-	${ENV}/pytest --cov=stones tests/
+	${ENV}/pytest --cov-report term --cov=stones tests/
 
 test:
 	${ENV}/pytest -ra --capture=no --verbose tests/

@@ -3,7 +3,7 @@ from collections.abc import MutableMapping
 from .encoders import encoders
 
 
-class Base(MutableMapping):
+class BaseStore(MutableMapping):
 
     def __init__(self, encoder=None, encode_decode=tuple()):
         if encoder and encoder in encoders:
