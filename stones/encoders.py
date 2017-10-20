@@ -33,7 +33,11 @@ def encode_json(data):
     return json.dumps(data).encode('utf8')
 
 def decode_json(data):
-    return json.loads(data)
+    data = json.loads(data)
+    if isinstance(data, str):
+        return data.encode('utf')
+    if isinstance(data, list):
+        return [d.encode('utf') for d in data]
 
 
 def _cbor_encoder(encoder, value):
