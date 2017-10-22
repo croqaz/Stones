@@ -1,0 +1,25 @@
+language: python
+
+python:
+  - 3.6
+
+services:
+  - riak
+  - redis-server
+
+before_install:
+  - sudo apt update -qq
+  - sudo apt install -y -qq libleveldb-dev liblmdb-dev
+
+install:
+  - pip install -r requirements.txt
+
+script:
+  - pytest -ra -sv --cov=./
+
+after_success:
+  - codecov
+
+branches:
+  only:
+    - master
