@@ -18,8 +18,9 @@ class LevelStore(BaseStore):
 
     __slots__ = ('db', '_name')
 
-    def __init__(self, name, encoder='cbor', iterable=tuple(), **kwargs):
-        super().__init__(encoder=encoder)
+    def __init__(self, name, encoder='cbor', encode_decode=tuple(), value_type=bytes,
+            iterable=tuple(), **kwargs):
+        super().__init__(encoder=encoder, encode_decode=encode_decode, value_type=value_type)
         self._name = name + '.lvl'
         self.db = plyvel.DB(self._name, create_if_missing=True)
         if iterable or kwargs:
@@ -34,26 +35,28 @@ class LevelStore(BaseStore):
             iterable = iterable.items()
         with self.db.write_batch() as batch:
             for key, value in itertools.chain(iterable, kwargs.items()):
-                batch.put(key, value)
+                batch.put(key, self._encode(value))
 
 
     def get(self, key, default=None):
-        return self.db.get(key, default)
+        encoded_value = self.db.get(key, False)
+        return self._decode(encoded_value) if encoded_value else default
 
     def put(self, key, value, overwrite=False):
         if not overwrite and self.db.get(key):
             return
-        self.db.put(key, value)
+        self.db.put(key, self._encode(value))
 
     def delete(self, key):
         return self.db.delete(key)
 
 
     def __getitem__(self, key):
-        return self.db.get(key)
+        encoded_value = self.db.get(key)
+        return self._decode(encoded_value)
 
     def __setitem__(self, key, value):
-        return self.db.put(key, value)
+        return self.db.put(key, self._encode(value))
 
     __delitem__ = delete
 
@@ -75,7 +78,7 @@ class LevelStore(BaseStore):
     def items(self):
         items_dict = {}
         for key, value in self.db.iterator(include_key=True, include_value=True):
-            items_dict[key] = value
+            items_dict[key] = self._decode(value)
         return items_dict
 
 

@@ -12,8 +12,9 @@ class RedisStore(BaseStore):
 
     __slots__ = ('redis', 'redis_key')
 
-    def __init__(self, redis, redis_key, encoder='cbor', iterable=tuple(), **kwargs):
-        super().__init__(encoder=encoder)
+    def __init__(self, redis, redis_key, encoder='cbor', encode_decode=tuple(),
+            value_type=bytes, iterable=tuple(), **kwargs):
+        super().__init__(encoder=encoder, encode_decode=encode_decode, value_type=value_type)
         self.redis = redis
         self.redis_key = redis_key
         if iterable or kwargs:
@@ -68,8 +69,7 @@ class RedisStore(BaseStore):
         yield from self.redis.hkeys(self.redis_key)
 
     def __repr__(self):
-        items = dict(self.items())
-        return self.__class__.__name__ + repr(items)
+        return self.__class__.__name__ + repr(self.items())
 
 
     def keys(self):
@@ -82,7 +82,7 @@ class RedisStore(BaseStore):
         items = self.redis.hgetall(self.redis_key)
         keys = items[::2]
         vals = (self._decode(val) for val in items[1::2])
-        return list(zip(keys, vals))
+        return dict(zip(keys, vals))
 
 
     def update(self, iterable=tuple(), **kwargs):

@@ -32,6 +32,8 @@ def check_get_put(stor):
     assert stor.get(b'x') == b'xxx'
     assert stor.get(b'x', False) == b'xxx'
 
+    assert stor.items() == {b'a': b'aa', b'x': b'xxx'}
+
 
 def check_get_set(stor):
 
@@ -50,6 +52,8 @@ def check_get_set(stor):
     assert len(stor) == 2
     assert stor[b'x'] == b'xx'
 
+    assert stor.items() == {b'a': b'aaa', b'x': b'xx'}
+
 
 def check_iter(stor):
 
@@ -59,7 +63,10 @@ def check_iter(stor):
     stor.update([(b'n', b'123'), (b'm', b'987')])
     assert len(stor) == 4
 
-    assert sorted(x for x in stor) == [b'a', b'm', b'n', b'x']
+    keys = [b'a', b'm', b'n', b'x']
+
+    assert sorted(x for x in stor) == keys
+    assert sorted(stor.keys()) == keys
 
 
 def check_delete(stor):
@@ -78,8 +85,3 @@ def check_delete(stor):
 
     assert stor.get(b'a') is None
     assert stor.get(b'x') is None
-
-
-def check_list_append(stor):
-
-    ...

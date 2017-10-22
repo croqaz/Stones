@@ -22,6 +22,10 @@ except ModuleNotFoundError:
     print('MessagePack can be installed at PyPi.python.org/pypi/msgpack-python')
 
 
+def noop(data):
+    return data
+
+
 def encode_pickle(data):
     return pickle.dumps(data, protocol=pickle.HIGHEST_PROTOCOL, fix_imports=False)
 
@@ -61,6 +65,10 @@ def decode_msgpack(data):
 
 
 encoders = {
+    'noop': {
+        'encode': noop,
+        'decode': noop
+    },
     'pickle': {
         'encode': encode_pickle,
         'decode': decode_pickle
