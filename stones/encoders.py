@@ -1,4 +1,7 @@
 
+#- rev: v1 -
+#- hash: QUUZZR -
+
 import pickle
 
 try:

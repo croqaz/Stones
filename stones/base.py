@@ -1,4 +1,7 @@
 
+#- rev: v1 -
+#- hash: UCHHE+ -
+
 from collections.abc import MutableMapping
 from .exceptions import EncodeException
 from .encoders import encoders

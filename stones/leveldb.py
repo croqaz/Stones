@@ -1,4 +1,7 @@
 
+#- rev: v1 -
+#- hash: 2YCPJL -
+
 import itertools
 import contextlib
 from .base import BaseStore

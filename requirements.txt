@@ -6,6 +6,8 @@ pytest
 pytest-cov
 # codecov.io
 codecov
+# Stick headers
+# pip install git+https://github.com/croqaz/Sticky
 
 
 # UJSON (optional)

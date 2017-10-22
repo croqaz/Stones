@@ -2,11 +2,17 @@
 # Stones
 [![Build Status](https://travis-ci.org/croqaz/Stones.svg?branch=master)](https://travis-ci.org/croqaz/Stones) [![codecov](https://codecov.io/gh/croqaz/Stones/branch/master/graph/badge.svg)](https://codecov.io/gh/croqaz/Stones)
 
-Pythonic key-value store that can be backed by LevelDB, LMDB, or Redis.
+Persistent key-value containers, compatible with Python dict, that can be backed by LevelDB, LMDB, or Redis.
 
 Similar with:
 
-* https://github.com/lukedeo/Cupboard
-* https://github.com/datastore/datastore
-* https://bitbucket.org/lcrees/shove
-* https://github.com/shuhaowu/kvkit
+* [Datastore](https://github.com/datastore/datastore)
+* [Lukedeo/Cupboard](https://github.com/lukedeo/Cupboard)
+* [Lcrees/Shove](https://bitbucket.org/lcrees/shove)
+* [ShuhaoWu/Kvkit](https://github.com/shuhaowu/kvkit)
+
+---
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+
+Copyright (c) 2017 Cristi Constantin.
