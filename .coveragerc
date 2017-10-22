@@ -1,0 +1,6 @@
+[run]
+branch = True
+source = sticky
+
+[report]
+ignore_errors = True
