@@ -6,12 +6,6 @@ clean-pyc:
 	find . -name '*.pyo' -exec rm -f {} +
 	find . -name '*~' -exec rm -f  {} +
 
-clean-build:
-	rm -f .coverage
-	rm -fr build/
-	rm -fr dist/
-	rm -fr *.egg-info
-
 update:
 	${ENV}/pip install -U -r requirements.txt
 
@@ -23,3 +17,6 @@ coverage:
 
 test:
 	${ENV}/pytest -ra --capture=no --verbose tests/
+
+icky:
+	${ENV}/python -m sticky.cli -s stones/

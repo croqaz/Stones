@@ -1,6 +1,6 @@
 
-#- rev: v1 -
-#- hash: QUUZZR -
+#- rev: v2 -
+#- hash: V6CF92 -
 
 import pickle
 
@@ -37,12 +37,16 @@ def decode_pickle(data):
 
 
 def encode_json(data):
+    if isinstance(data, set):
+        data = ['__set__'] + list(data)
     return json.dumps(data).encode('utf8')
 
 def decode_json(data):
     data = json.loads(data)
     if isinstance(data, str):
         return data.encode('utf')
+    if isinstance(data, list) and data[0] == '__set__':
+        return set(d.encode('utf') for d in data[1:])
     if isinstance(data, list):
         return [d.encode('utf') for d in data]
 
@@ -60,11 +64,20 @@ def decode_cbor(data):
     return cbor2.loads(data, tag_hook=_cbor_decoder)
 
 
+def _msgpack_encoder(data):
+    if isinstance(data, set):
+        return [b'__set__'] + list(data)
+
+def _msgpack_decoder(data):
+    if data[0] == b'__set__':
+        data = set(data[1:])
+    return data
+
 def encode_msgpack(data):
-    return msgpack.packb(data, use_bin_type=True)
+    return msgpack.dumps(data, use_bin_type=True, default=_msgpack_encoder)
 
 def decode_msgpack(data):
-    return msgpack.unpackb(data)
+    return msgpack.loads(data, list_hook=_msgpack_decoder)
 
 
 encoders = {

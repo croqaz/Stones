@@ -2,9 +2,8 @@
 # Dev lint code
 flake8
 # Dev test code
-pytest
 pytest-cov
-# codecov.io
+# Dev coverage
 codecov
 # Stick headers
 # pip install git+https://github.com/croqaz/Sticky

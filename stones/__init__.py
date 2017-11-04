@@ -1,5 +1,8 @@
 
 # flake8: noqa
+#- rev: v1 -
+#- hash: FUJB9A -
+
 from .leveldb import LevelStore
 from .lmdb import LmdbStore
 from .redis import RedisStore
