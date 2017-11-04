@@ -13,7 +13,7 @@ codecov
 ujson
 
 # SimpleJson (optional)
-simplejson ~= 3.11
+# simplejson ~= 3.11
 
 # CBOR2 (optional)
 cbor2 ~= 4.0

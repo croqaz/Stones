@@ -1,6 +1,7 @@
 language: python
 
 python:
+  - 3.5
   - 3.6
 
 services:
@@ -16,7 +17,7 @@ install:
 
 script:
   - flake8 stones
-  - pytest -ra -sv --cov=./
+  - pytest -ra -sv --cov=stones tests/
 
 after_success:
   - codecov
