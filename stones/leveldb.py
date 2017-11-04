@@ -1,6 +1,6 @@
 
-#- rev: v1 -
-#- hash: 2YCPJL -
+#- rev: v2 -
+#- hash: NYS3JO -
 
 import itertools
 import contextlib
@@ -77,6 +77,18 @@ class LevelStore(BaseStore):
         items = dict(self.items())
         return self.__class__.__name__ + repr(items)
 
+
+    def keys(self):
+        keys_list = []
+        for key in self.db.iterator(include_key=True, include_value=False):
+            keys_list.append(key)
+        return keys_list
+
+    def values(self):
+        vals_list = []
+        for value in self.db.iterator(include_key=False, include_value=True):
+            vals_list.append(self._decode(value))
+        return vals_list
 
     def items(self):
         items_dict = {}

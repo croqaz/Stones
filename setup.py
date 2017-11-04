@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name = 'stones',
-    version = '0.1.0',
+    version = '0.1.1',
     author = 'Cristi Constantin',
     author_email = 'cristi.constantin@live.com',
     description = 'Persistent key-value containers, compatible with Python dict',
@@ -13,7 +13,7 @@ setup(
     packages = ['stones', 'tests'],
     include_package_data = True,
     zip_safe = True,
-    python_requires = '>= 3.5',
+    python_requires = '>= 3.6',
     extras_require = {
         'dev': ['flake8', 'codecov'],
         'test': ['pytest', 'pytest-cov'],

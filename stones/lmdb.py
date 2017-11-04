@@ -1,6 +1,6 @@
 
-#- rev: v1 -
-#- hash: RRWZNV -
+#- rev: v2 -
+#- hash: AL6AUR -
 
 import itertools
 import contextlib
@@ -81,6 +81,20 @@ class LmdbStore(BaseStore):
         items = dict(self.items())
         return self.__class__.__name__ + repr(items)
 
+
+    def keys(self):
+        keys_list = []
+        with self.db.begin(db=self.table) as txn:
+            for key in txn.cursor().iternext(keys=True, values=False):
+                keys_list.append(key)
+        return keys_list
+
+    def values(self):
+        vals_list = []
+        with self.db.begin(db=self.table) as txn:
+            for value in txn.cursor().iternext(keys=False, values=True):
+                vals_list.append(self._decode(value))
+        return vals_list
 
     def items(self):
         items_dict = {}

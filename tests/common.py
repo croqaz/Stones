@@ -7,6 +7,9 @@ def check_empty(stor):
     # Default values for any key
     assert stor.get(b'a', False) is False
     assert stor.get(b'x', False) is False
+    # Keys and values are empty
+    assert stor.keys() == []
+    assert stor.values() == []
 
 
 def check_get_put(stor):
@@ -32,6 +35,8 @@ def check_get_put(stor):
     assert stor.get(b'x') == b'xxx'
     assert stor.get(b'x', False) == b'xxx'
 
+    assert stor.keys() == [b'a', b'x']
+    assert stor.values() == [b'aa', b'xxx']
     assert stor.items() == {b'a': b'aa', b'x': b'xxx'}
 
 
@@ -52,6 +57,8 @@ def check_get_set(stor):
     assert len(stor) == 2
     assert stor[b'x'] == b'xx'
 
+    assert stor.keys() == [b'a', b'x']
+    assert stor.values() == [b'aaa', b'xx']
     assert stor.items() == {b'a': b'aaa', b'x': b'xx'}
 
 
