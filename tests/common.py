@@ -15,6 +15,7 @@ def check_empty(stor):
 def check_get_put(stor):
 
     stor.setdefault(b'a', b'a')
+    stor.setdefault(b'a', b'a')
     # Key doesn't exist, create it
     assert len(stor) == 1
     assert stor.get(b'a') == b'a'

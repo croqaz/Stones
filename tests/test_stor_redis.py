@@ -33,6 +33,14 @@ def test_get_set(stor):
     check_get_set(stor)
 
 
+def test_populate():
+    d = RedisStore(redis, STORE_KEY, iterable=[(b'a', b'b'), (b'c', b'd')])
+    assert len(d) == 2
+    assert d.items() == {b'a': b'b', b'c': b'd'}
+    d.close()
+    d.clear()
+
+
 def test_iter(stor):
     check_iter(stor)
 

@@ -1,6 +1,6 @@
 
-#- rev: v1 -
-#- hash: SXXJFJ -
+#- rev: v2 -
+#- hash: H2MHI4 -
 
 import itertools
 import contextlib
@@ -24,7 +24,8 @@ class RedisStore(BaseStore):
             self._populate(iterable, **kwargs)
 
     def close(self):
-        self.redis.close()
+        # self.redis.close()
+        pass
 
 
     def _populate(self, iterable=tuple(), **kwargs):

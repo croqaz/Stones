@@ -22,6 +22,12 @@ def test_deep_list():
     s.list_remove(b'li', b'x')
     assert len(s[b'li']) == 2
 
+    with pytest.raises(TypeError):
+        s.set_add(b'li', b'a')
+
+    with pytest.raises(TypeError):
+        s.set_remove(b'li', b'a')
+
     s.clear()
     s.close()
     shutil.rmtree('a.lvl', True)
@@ -41,6 +47,12 @@ def test_deep_set():
 
     s.set_remove(b'set', b'x')
     assert len(s[b'set']) == 1
+
+    with pytest.raises(TypeError):
+        s.list_append(b'set', b'a')
+
+    with pytest.raises(TypeError):
+        s.list_remove(b'set', b'a')
 
     s.clear()
     s.close()
