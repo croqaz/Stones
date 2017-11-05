@@ -1,6 +1,6 @@
 
-#- rev: v2 -
-#- hash: V6CF92 -
+#- rev: v3 -
+#- hash: W6P15W -
 
 import pickle
 
@@ -32,6 +32,7 @@ def noop(data):
 def encode_pickle(data):
     return pickle.dumps(data, protocol=pickle.HIGHEST_PROTOCOL, fix_imports=False)
 
+
 def decode_pickle(data):
     return pickle.loads(data, fix_imports=False)
 
@@ -40,6 +41,7 @@ def encode_json(data):
     if isinstance(data, set):
         data = ['__set__'] + list(data)
     return json.dumps(data).encode('utf8')
+
 
 def decode_json(data):
     data = json.loads(data)
@@ -54,11 +56,14 @@ def decode_json(data):
 def _cbor_encoder(encoder, value):
     encoder.encode(CBORTag(38, sorted(value)))
 
+
 def _cbor_decoder(decoder, tag, fp):
     return set(tag.value)
 
+
 def encode_cbor(data):
     return cbor2.dumps(data, default=_cbor_encoder)
+
 
 def decode_cbor(data):
     return cbor2.loads(data, tag_hook=_cbor_decoder)
@@ -68,13 +73,16 @@ def _msgpack_encoder(data):
     if isinstance(data, set):
         return [b'__set__'] + list(data)
 
+
 def _msgpack_decoder(data):
     if data[0] == b'__set__':
         data = set(data[1:])
     return data
 
+
 def encode_msgpack(data):
     return msgpack.dumps(data, use_bin_type=True, default=_msgpack_encoder)
+
 
 def decode_msgpack(data):
     return msgpack.loads(data, list_hook=_msgpack_decoder)

@@ -8,8 +8,8 @@ def check_empty(stor):
     assert stor.get(b'a', False) is False
     assert stor.get(b'x', False) is False
     # Keys and values are empty
-    assert stor.keys() == []
-    assert stor.values() == []
+    assert list(stor.keys()) == []
+    assert list(stor.values()) == []
 
 
 def check_get_put(stor):

@@ -4,18 +4,12 @@ ignore =
   E121,
   # E128 continuation line under-indented for visual indent
   E128,
-  # E261 at least two spaces before inline comment
-  E261,
   # E265 block comment should start with '# '
   E265,
-  # E302 expected 2 blank lines
+  # E302 expected 2 blank lines, found 1
   E302,
   # E303 too many blank lines
   E303,
-  # E305 expected 2 blank lines after class or function definition
-  E402,
-  # E501 line too long
-  E501
 
 exclude = .git,__pycache__,doc,old,env,build,dist
 max-complexity = 15

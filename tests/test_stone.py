@@ -15,25 +15,36 @@ def test_base_store():
         b = BaseStore()
     with pytest.raises(TypeError):
         b = BaseStore('pickle')
+    with pytest.raises(StoreException):
+        s = stone('a', 'xxx')
     with pytest.raises(EncodeException):
-        s = stone('a', value_type=set, encoder=None, encode_decode=None)
+        s = stone('a', encoder='xxx')
+    with pytest.raises(EncodeException):
+        s = stone('a', 'lmdb', value_type=set, encoder=None, encode_decode=None)
 
 
 def test_default_stone():
     s = stone('a')
     assert s._encode == noop
     assert s._decode == noop
-    assert isinstance(s, LevelStore)
-    s.clear()
-    shutil.rmtree('a.lvl', True)
+    assert isinstance(s, MemoryStore)
 
 
 def test_base_store_encoder_pair():
-    s = stone('a', value_type=set, encoder=None, encode_decode=(encode_json, decode_json))
+    s = stone('a', 'lmdb', value_type=set, encoder=None, encode_decode=(encode_json, decode_json))
     assert s._encode == encode_json
     assert s._decode == decode_json
     s.clear()
     shutil.rmtree('a.lvl', True)
+
+
+def test_memory_store():
+    s = stone('a', 'memory', 'noop')
+    assert s._encode == noop
+    assert isinstance(s, MemoryStore)
+    s = stone('a', persistence='memory', encoder='noop')
+    assert s._encode == noop
+    assert isinstance(s, MemoryStore)
 
 
 def test_level_store():

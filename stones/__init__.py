@@ -1,8 +1,9 @@
 
 # flake8: noqa
-#- rev: v1 -
-#- hash: FUJB9A -
+#- rev: v2 -
+#- hash: 8YRETF -
 
+from .memory import MemoryStore
 from .leveldb import LevelStore
 from .lmdb import LmdbStore
 from .redis import RedisStore
@@ -12,7 +13,7 @@ from .exceptions import StoreException
 from .exceptions import EncodeException
 
 
-def stone(name, persistence='level', encoder='pickle', encode_decode=tuple(),
+def stone(name, persistence='memory', encoder='pickle', encode_decode=tuple(),
         value_type=bytes, options={}):
     if encoder and encoder not in encoders:
         raise EncodeException(f'Invalid encoder name "{encoder}"')

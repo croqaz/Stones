@@ -7,8 +7,20 @@ sys.path.insert(1, os.getcwd())
 from stones import *
 
 
-def test_deep_list():
-    s = stone('a', value_type=list)
+@pytest.fixture(scope='function', params=['level', 'lmdb', 'memory'])
+def stor(request):
+    return request.param
+
+
+def cleanup(stor):
+    stor.clear()
+    stor.close()
+    shutil.rmtree('a.lvl', True)
+    shutil.rmtree('a.lmdb', True)
+
+
+def test_deep_list(stor):
+    s = stone('a', stor, value_type=list)
 
     s[b'li'] = []
     assert isinstance(s[b'li'], list)
@@ -28,13 +40,11 @@ def test_deep_list():
     with pytest.raises(TypeError):
         s.set_remove(b'li', b'a')
 
-    s.clear()
-    s.close()
-    shutil.rmtree('a.lvl', True)
+    cleanup(s)
 
 
-def test_deep_set():
-    s = stone('a', value_type=set)
+def test_deep_set(stor):
+    s = stone('a', stor, value_type=set)
 
     s[b'set'] = set()
     assert isinstance(s[b'set'], set)
@@ -54,6 +64,4 @@ def test_deep_set():
     with pytest.raises(TypeError):
         s.list_remove(b'set', b'a')
 
-    s.clear()
-    s.close()
-    shutil.rmtree('a.lvl', True)
+    cleanup(s)

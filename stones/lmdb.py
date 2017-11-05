@@ -1,6 +1,6 @@
 
-#- rev: v2 -
-#- hash: AL6AUR -
+#- rev: v3 -
+#- hash: CQXWOK -
 
 import itertools
 import contextlib
@@ -38,16 +38,17 @@ class LmdbStore(BaseStore):
             iterable = iterable.items()
         with self.db.begin(write=True, db=self.table) as txn:
             for key, value in itertools.chain(iterable, kwargs.items()):
-                txn.put(key, value, dupdata=False)
+                txn.put(key, self._encode(value), dupdata=False)
 
 
     def get(self, key, default=None):
         with self.db.begin(db=self.table) as txn:
-            return txn.get(key, default)
+            encoded_value = txn.get(key, default)
+            return self._decode(encoded_value) if encoded_value else default
 
     def put(self, key, value, overwrite=False):
         with self.db.begin(write=True, db=self.table) as txn:
-            txn.put(key, value, dupdata=False, overwrite=overwrite)
+            txn.put(key, self._encode(value), dupdata=False, overwrite=overwrite)
 
     def delete(self, key):
         with self.db.begin(write=True, db=self.table) as txn:
@@ -56,11 +57,12 @@ class LmdbStore(BaseStore):
 
     def __getitem__(self, key):
         with self.db.begin(db=self.table) as txn:
-            return txn.get(key)
+            encoded_value = txn.get(key)
+            return self._decode(encoded_value)
 
     def __setitem__(self, key, value):
         with self.db.begin(write=True, db=self.table) as txn:
-            txn.put(key, value, dupdata=False)
+            txn.put(key, self._encode(value), dupdata=False)
 
     __delitem__ = delete
 

@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name = 'stones',
-    version = '0.1.1',
+    version = '0.2.0',
     author = 'Cristi Constantin',
     author_email = 'cristi.constantin@live.com',
     description = 'Persistent key-value containers, compatible with Python dict',
