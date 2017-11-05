@@ -1,6 +1,6 @@
 [run]
 branch = True
-source = sticky
+omit = stones/__version__.py
 
 [report]
 ignore_errors = True
