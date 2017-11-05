@@ -1,6 +1,6 @@
 
-#- rev: v1 -
-#- hash: UCHHE+ -
+#- rev: v2 -
+#- hash: R0QC4K -
 
 from collections.abc import MutableMapping
 from .exceptions import EncodeException
@@ -13,17 +13,13 @@ class BaseStore(MutableMapping):
 
     def __init__(self, encoder=None, encode_decode=tuple(), value_type=bytes):
         self._type = value_type
-        if value_type == bytes:
-            self._encode = encoders['noop']['encode']
-            self._decode = encoders['noop']['encode']
+        if encoder and encoder in encoders:
+            self._encode = encoders[encoder]['encode']
+            self._decode = encoders[encoder]['decode']
+        elif encode_decode and len(encode_decode) == 2:
+            self._encode, self._decode = encode_decode
         else:
-            if encoder and encoder in encoders:
-                self._encode = encoders[encoder]['encode']
-                self._decode = encoders[encoder]['decode']
-            elif encode_decode and len(encode_decode) == 2:
-                self._encode, self._decode = encode_decode
-            else:
-                raise EncodeException('The store needs an encoder and a decoder')
+            raise EncodeException('The store needs an encoder and a decoder')
 
 
     def setdefault(self, key, default=None):

@@ -1,14 +1,32 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
+# https://github.com/kennethreitz/setup.py ❤️ ✨ 🍰 ✨
+
+import os
 from setuptools import setup
 
+NAME = 'stones'
+DESCRIPTION = 'Persistent key-value containers, compatible with Python dict.'
+KEYWORDS = 'persistent dict'
+URL = 'https://github.com/croqaz/Stones'
+AUTHOR = 'Cristi Constantin'
+EMAIL = 'cristi.constantin@live.com'
+
+here = os.path.abspath(os.path.dirname(__file__))
+about = {}
+
+with open(os.path.join(here, NAME, '__version__.py')) as f:
+    exec(f.read(), about)
+
 setup(
-    name = 'stones',
-    version = '0.2.0',
-    author = 'Cristi Constantin',
-    author_email = 'cristi.constantin@live.com',
-    description = 'Persistent key-value containers, compatible with Python dict',
-    keywords = 'persistent dict',
-    url = 'https://github.com/croqaz/Stones',
+    version = about['__version__'],
+    name = NAME,
+    description = DESCRIPTION,
+    keywords = KEYWORDS,
+    url = URL,
+    author = AUTHOR,
+    author_email = EMAIL,
     license = 'MIT',
     packages = ['stones', 'tests'],
     include_package_data = True,
@@ -18,7 +36,8 @@ setup(
         'dev': ['flake8', 'codecov'],
         'test': ['pytest', 'pytest-cov'],
     },
-    classifiers=[
+    classifiers = [
+        # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
         'Development Status :: 4 - Beta',
         'Environment :: Console',
         'Intended Audience :: Developers',

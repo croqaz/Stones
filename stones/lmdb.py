@@ -1,6 +1,6 @@
 
-#- rev: v3 -
-#- hash: CQXWOK -
+#- rev: v4 -
+#- hash: 7INBL5 -
 
 import itertools
 import contextlib
@@ -102,7 +102,7 @@ class LmdbStore(BaseStore):
         items_dict = {}
         with self.db.begin(db=self.table) as txn:
             for key, value in txn.cursor().iternext(keys=True, values=True):
-                items_dict[key] = value
+                items_dict[key] = self._decode(value)
         return items_dict
 
 

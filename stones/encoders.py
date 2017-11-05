@@ -1,6 +1,6 @@
 
-#- rev: v3 -
-#- hash: W6P15W -
+#- rev: v4 -
+#- hash: EAKY6Z -
 
 import pickle
 
@@ -25,6 +25,10 @@ except ModuleNotFoundError:
     print('MessagePack can be installed at PyPi.python.org/pypi/msgpack-python')
 
 
+TUP_FLAG = b'__(,)__'
+SET_FLAG = b'__{,}__'
+
+
 def noop(data):
     return data
 
@@ -38,16 +42,22 @@ def decode_pickle(data):
 
 
 def encode_json(data):
-    if isinstance(data, set):
-        data = ['__set__'] + list(data)
+    if isinstance(data, tuple):
+        data = [TUP_FLAG] + list(data)
+    elif isinstance(data, set):
+        data = [SET_FLAG] + list(data)
     return json.dumps(data).encode('utf8')
 
 
 def decode_json(data):
     data = json.loads(data)
+    tup_flag = TUP_FLAG.decode('utf8')
+    set_flag = SET_FLAG.decode('utf8')
     if isinstance(data, str):
         return data.encode('utf')
-    if isinstance(data, list) and data[0] == '__set__':
+    if isinstance(data, list) and data[0] == tup_flag:
+        return tuple(d.encode('utf') for d in data[1:])
+    if isinstance(data, list) and data[0] == set_flag:
         return set(d.encode('utf') for d in data[1:])
     if isinstance(data, list):
         return [d.encode('utf') for d in data]
@@ -70,18 +80,23 @@ def decode_cbor(data):
 
 
 def _msgpack_encoder(data):
-    if isinstance(data, set):
-        return [b'__set__'] + list(data)
+    if isinstance(data, tuple):
+        data = [TUP_FLAG] + list(data)
+    elif isinstance(data, set):
+        data = [SET_FLAG] + list(data)
+    return data
 
 
 def _msgpack_decoder(data):
-    if data[0] == b'__set__':
+    if data[0] == TUP_FLAG:
+        data = tuple(data[1:])
+    elif data[0] == SET_FLAG:
         data = set(data[1:])
     return data
 
 
 def encode_msgpack(data):
-    return msgpack.dumps(data, use_bin_type=True, default=_msgpack_encoder)
+    return msgpack.dumps(data, use_bin_type=True, strict_types=True, default=_msgpack_encoder)
 
 
 def decode_msgpack(data):

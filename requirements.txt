@@ -6,7 +6,7 @@ pytest-cov
 # Dev coverage
 codecov
 # Stick headers
-# pip install git+https://github.com/croqaz/Sticky
+# git+https://github.com/croqaz/Sticky
 
 
 # UJSON (optional)
@@ -19,7 +19,8 @@ ujson
 cbor2 ~= 4.0
 
 # Msgpack (optional)
-msgpack-python ~= 0.4
+# msgpack-python ~= 0.4
+git+https://github.com/msgpack/msgpack-python
 
 
 # LevelDB (optional)

@@ -9,7 +9,8 @@ from stones.encoders import encoders
 @pytest.fixture(scope='function', params=[
     b'qwe ASD 123',
     [b'a', b'qwerty'],
-    {b'a', b'qwerty'}
+    {b'a', b'qwerty'},
+    # (b'yes', b'no')
 ])
 def value(request):
     return request.param

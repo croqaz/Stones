@@ -1,7 +1,5 @@
 
 # flake8: noqa
-#- rev: v2 -
-#- hash: 8YRETF -
 
 from .memory import MemoryStore
 from .leveldb import LevelStore

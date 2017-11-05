@@ -35,6 +35,8 @@ def test_populate():
     d = LevelStore(DB, iterable=[(b'a', b'b'), (b'c', b'd')])
     assert len(d) == 2
     assert d.items() == {b'a': b'b', b'c': b'd'}
+    d.update({b'a': b'x'})
+    assert d.items() == {b'a': b'x', b'c': b'd'}
     d.close()
     shutil.rmtree(DB + '.lvl', True)
 

@@ -25,8 +25,8 @@ def test_base_store():
 
 def test_default_stone():
     s = stone('a')
-    assert s._encode == noop
-    assert s._decode == noop
+    assert s._encode == encode_pickle
+    assert s._decode == decode_pickle
     assert isinstance(s, MemoryStore)
 
 
