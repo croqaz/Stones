@@ -1,6 +1,6 @@
 
-#- rev: v2 -
-#- hash: H2MHI4 -
+#- rev: v3 -
+#- hash: UKMYAK -
 
 import itertools
 import contextlib
@@ -73,7 +73,8 @@ class RedisStore(BaseStore):
         yield from self.redis.hkeys(self.redis_key)
 
     def __repr__(self):
-        return self.__class__.__name__ + repr(self.items())
+        items = dict(self.items())
+        return self.__class__.__name__ + repr(items)
 
 
     def keys(self):
@@ -86,7 +87,7 @@ class RedisStore(BaseStore):
         items = self.redis.hgetall(self.redis_key)
         keys = items[::2]
         vals = (self._decode(val) for val in items[1::2])
-        return dict(zip(keys, vals))
+        return zip(keys, vals)
 
 
     def update(self, iterable=tuple(), **kwargs):

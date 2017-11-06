@@ -13,6 +13,7 @@ def stor():
     DB = 'a'
     d = LmdbStore(DB)
     d.clear()
+    repr(d)
     yield d
     d.close()
     shutil.rmtree(DB + '.lmdb', True)
@@ -34,9 +35,9 @@ def test_populate():
     DB = 'a'
     d = LmdbStore(DB, iterable=[(b'a', b'b'), (b'c', b'd')])
     assert len(d) == 2
-    assert d.items() == {b'a': b'b', b'c': b'd'}
+    assert list(d.items()) == [(b'a', b'b'), (b'c', b'd')]
     d.update({b'a': b'x'})
-    assert d.items() == {b'a': b'x', b'c': b'd'}
+    assert list(d.items()) == [(b'a', b'x'), (b'c', b'd')]
     d.close()
     shutil.rmtree(DB + '.lmdb', True)
 

@@ -1,6 +1,6 @@
 
-#- rev: v2 -
-#- hash: +M1UHB -
+#- rev: v3 -
+#- hash: IUTZTM -
 
 import itertools
 import contextlib
@@ -64,7 +64,7 @@ class MemoryStore(BaseStore):
         return iter(self.db)
 
     def __repr__(self):
-        return repr(self.db)
+        return self.__class__.__name__ + repr(self.db)
 
 
     def keys(self):
@@ -74,7 +74,7 @@ class MemoryStore(BaseStore):
         return list(self.db.values())
 
     def items(self):
-        return dict(self.db)
+        return self.db.items()
 
 
     def update(self, iterable=tuple(), **kwargs):

@@ -38,7 +38,7 @@ def check_get_put(stor):
 
     assert stor.keys() == [b'a', b'x']
     assert stor.values() == [b'aa', b'xxx']
-    assert stor.items() == {b'a': b'aa', b'x': b'xxx'}
+    assert dict(stor.items()) == {b'a': b'aa', b'x': b'xxx'}
 
 
 def check_get_set(stor):
@@ -60,7 +60,7 @@ def check_get_set(stor):
 
     assert stor.keys() == [b'a', b'x']
     assert stor.values() == [b'aaa', b'xx']
-    assert stor.items() == {b'a': b'aaa', b'x': b'xx'}
+    assert dict(stor.items()) == {b'a': b'aaa', b'x': b'xx'}
 
 
 def check_iter(stor):

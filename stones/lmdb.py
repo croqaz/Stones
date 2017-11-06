@@ -1,6 +1,6 @@
 
-#- rev: v4 -
-#- hash: 7INBL5 -
+#- rev: v5 -
+#- hash: 1RMI3F -
 
 import itertools
 import contextlib
@@ -99,11 +99,11 @@ class LmdbStore(BaseStore):
         return vals_list
 
     def items(self):
-        items_dict = {}
+        items_list = []
         with self.db.begin(db=self.table) as txn:
             for key, value in txn.cursor().iternext(keys=True, values=True):
-                items_dict[key] = self._decode(value)
-        return items_dict
+                items_list.append((key, self._decode(value)))
+        return items_list
 
 
     def update(self, iterable=tuple(), **kwargs):
