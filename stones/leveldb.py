@@ -1,7 +1,8 @@
 
-#- rev: v3 -
-#- hash: QJ35V0 -
+#- rev: v4 -
+#- hash: GCMXIY -
 
+import shutil
 import itertools
 import contextlib
 from .base import BaseStore
@@ -104,3 +105,8 @@ class LevelStore(BaseStore):
         self.close()
         plyvel.destroy_db(self._name)
         self.db = plyvel.DB(self._name, create_if_missing=True)
+
+    def destroy(self, yes_im_sure=False):
+        if yes_im_sure:
+            self.close()
+            shutil.rmtree(self._name)

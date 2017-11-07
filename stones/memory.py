@@ -1,6 +1,6 @@
 
-#- rev: v3 -
-#- hash: IUTZTM -
+#- rev: v4 -
+#- hash: MKBANT -
 
 import itertools
 import contextlib
@@ -12,7 +12,7 @@ class MemoryStore(BaseStore):
     Pure memory store.
     """
 
-    __slots__ = ('db', '_name')
+    __slots__ = ('db',)
 
     def __init__(self, *args, encoder='noop', encode_decode=tuple(),
             value_type=bytes, iterable=tuple(), **kwargs):
@@ -82,3 +82,7 @@ class MemoryStore(BaseStore):
 
     def clear(self):
         self.db.clear()
+
+    def destroy(self, yes_im_sure=False):
+        if yes_im_sure:
+            self.db.clear()

@@ -3,14 +3,14 @@ import os
 import sys
 import pytest
 sys.path.insert(1, os.getcwd())
-from stones import LmdbStore
+from stones import DbmStore
 from common import *
 
 DB = 'a'
 
 @pytest.fixture(scope='function')
 def stor():
-    d = LmdbStore(DB)
+    d = DbmStore(DB)
     d.clear()
     repr(d)
     yield d
@@ -31,11 +31,11 @@ def test_get_set(stor):
 
 
 def test_populate():
-    d = LmdbStore(DB, iterable=[(b'a', b'b'), (b'c', b'd')])
+    d = DbmStore(DB, iterable=[(b'a', b'b'), (b'c', b'd')])
     assert len(d) == 2
-    assert list(d.items()) == [(b'a', b'b'), (b'c', b'd')]
+    assert list(d.items()) == [(b'c', b'd'), (b'a', b'b')]
     d.update({b'a': b'x'})
-    assert list(d.items()) == [(b'a', b'x'), (b'c', b'd')]
+    assert list(d.items()) == [(b'c', b'd'), (b'a', b'x')]
     d.close()
     d.destroy(True)
 

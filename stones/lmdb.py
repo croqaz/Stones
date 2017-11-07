@@ -1,7 +1,8 @@
 
-#- rev: v5 -
-#- hash: 1RMI3F -
+#- rev: v6 -
+#- hash: G5JDHD -
 
+import shutil
 import itertools
 import contextlib
 from .base import BaseStore
@@ -19,12 +20,13 @@ class LmdbStore(BaseStore):
     Keys and values MUST be byte strings.
     """
 
-    __slots__ = ('db', 'table')
+    __slots__ = ('db', 'table', '_name')
 
     def __init__(self, name, table=None, encoder='cbor', encode_decode=tuple(),
             value_type=bytes, iterable=tuple(), **kwargs):
         super().__init__(encoder=encoder, encode_decode=encode_decode, value_type=value_type)
-        self.db = lmdb.open(name + '.lmdb', max_dbs=9, map_size=8e12)
+        self._name = name + '.lmdb'
+        self.db = lmdb.open(self._name, max_dbs=9, map_size=8e12)
         self.table = self.db.open_db(table)
         if iterable or kwargs:
             self._populate(iterable, **kwargs)
@@ -112,3 +114,8 @@ class LmdbStore(BaseStore):
     def clear(self):
         with self.db.begin(write=True) as txn:
             txn.drop(self.table, delete=False)
+
+    def destroy(self, yes_im_sure=False):
+        if yes_im_sure:
+            self.close()
+            shutil.rmtree(self._name)

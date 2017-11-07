@@ -70,3 +70,4 @@ stor.keys()
 * [Lcrees/Shove](https://bitbucket.org/lcrees/shove) - unmaintained (2 years)
 * [Datastore](https://github.com/datastore/datastore) - unmaintained (4 years)
 * [ShuhaoWu/Kvkit](https://github.com/shuhaowu/kvkit) - unmaintained (4 years)
+* [Persistent dict ActiveState recipe](https://code.activestate.com/recipes/576642) - from 2009
