@@ -15,7 +15,7 @@ class MemoryStore(BaseStore):
     __slots__ = ('db',)
 
     def __init__(self, *args, encoder='noop', encode_decode=tuple(),
-            value_type=bytes, iterable=tuple(), **kwargs):
+                 value_type=bytes, iterable=tuple(), **kwargs):
         super().__init__(encoder=encoder, encode_decode=encode_decode, value_type=value_type)
         self.db = {}
         if iterable or kwargs:
@@ -24,13 +24,11 @@ class MemoryStore(BaseStore):
     def close(self):
         pass
 
-
     def _populate(self, iterable=tuple(), **kwargs):
         with contextlib.suppress(AttributeError):
             iterable = iterable.items()
         for key, value in itertools.chain(iterable, kwargs.items()):
             self.db[key] = self._encode(value)
-
 
     def get(self, key, default=None):
         encoded_value = self.db.get(key)
@@ -43,7 +41,6 @@ class MemoryStore(BaseStore):
 
     def delete(self, key):
         del self.db[key]
-
 
     def __getitem__(self, key):
         encoded_value = self.db.get(key)
@@ -66,7 +63,6 @@ class MemoryStore(BaseStore):
     def __repr__(self):
         return self.__class__.__name__ + repr(self.db)
 
-
     def keys(self):
         return list(self.db.keys())
 
@@ -75,7 +71,6 @@ class MemoryStore(BaseStore):
 
     def items(self):
         return self.db.items()
-
 
     def update(self, iterable=tuple(), **kwargs):
         self._populate(iterable, **kwargs)

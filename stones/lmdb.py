@@ -23,7 +23,7 @@ class LmdbStore(BaseStore):
     __slots__ = ('db', 'table', '_name')
 
     def __init__(self, name, table=None, encoder='cbor', encode_decode=tuple(),
-            value_type=bytes, iterable=tuple(), **kwargs):
+                 value_type=bytes, iterable=tuple(), **kwargs):
         super().__init__(encoder=encoder, encode_decode=encode_decode, value_type=value_type)
         self._name = name + '.lmdb'
         self.db = lmdb.open(self._name, max_dbs=9, map_size=8e12)
@@ -34,14 +34,12 @@ class LmdbStore(BaseStore):
     def close(self):
         self.db.close()
 
-
     def _populate(self, iterable=tuple(), **kwargs):
         with contextlib.suppress(AttributeError):
             iterable = iterable.items()
         with self.db.begin(write=True, db=self.table) as txn:
             for key, value in itertools.chain(iterable, kwargs.items()):
                 txn.put(key, self._encode(value), dupdata=False)
-
 
     def get(self, key, default=None):
         with self.db.begin(db=self.table) as txn:
@@ -50,12 +48,12 @@ class LmdbStore(BaseStore):
 
     def put(self, key, value, overwrite=False):
         with self.db.begin(write=True, db=self.table) as txn:
-            txn.put(key, self._encode(value), dupdata=False, overwrite=overwrite)
+            txn.put(key, self._encode(value),
+                    dupdata=False, overwrite=overwrite)
 
     def delete(self, key):
         with self.db.begin(write=True, db=self.table) as txn:
             return txn.delete(key)
-
 
     def __getitem__(self, key):
         with self.db.begin(db=self.table) as txn:
@@ -67,7 +65,6 @@ class LmdbStore(BaseStore):
             txn.put(key, self._encode(value), dupdata=False)
 
     __delitem__ = delete
-
 
     def __contains__(self, key):
         with self.db.begin(db=self.table) as txn:
@@ -84,7 +81,6 @@ class LmdbStore(BaseStore):
     def __repr__(self):
         items = dict(self.items())
         return self.__class__.__name__ + repr(items)
-
 
     def keys(self):
         keys_list = []
@@ -106,7 +102,6 @@ class LmdbStore(BaseStore):
             for key, value in txn.cursor().iternext(keys=True, values=True):
                 items_list.append((key, self._decode(value)))
         return items_list
-
 
     def update(self, iterable=tuple(), **kwargs):
         self._populate(iterable, **kwargs)

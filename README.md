@@ -9,12 +9,12 @@ Persistent key-value containers, compatible with Python dict, that can be backed
 
 ### Features and limitations
 
-- the stores have exactly the same methods as a normal Python dict (get, set, delete, update, keys, values, items, contains, length, clear)
+- the stores have exactly the same methods as a Python dict (get, set, delete, update, keys, values, items, contains, length, clear)
 - because the storage is LevelDB, LMDB, or Redis, the keys can only be bytes
 - the values are actually also bytes, but the encoder converts your data structure into bytes
 - there are several encoders available: pickle, cbor2, msgpack, JSON
 - you can easily add your own encoder
-- after the data was saved, when opening the store, you must use the same encoder (makes sense, right?)
+- after the data was saved on HDD, when re-opening the store, you must use the same encoder (makes sense, right?)
 - a memory store is also available (not persistent)
 
 

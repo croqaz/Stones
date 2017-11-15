@@ -7,61 +7,41 @@ sys.path.insert(1, os.getcwd())
 from stones import *
 
 
-@pytest.fixture(scope='function', params=['level', 'lmdb', 'memory'])
+@pytest.fixture(scope='function', params=['level', 'lmdb', 'dbm', 'memory'])
 def stor(request):
+    return request.param
+
+
+@pytest.fixture(scope='function', params=[list, set])
+def deep(request):
     return request.param
 
 
 def cleanup(stor):
     stor.clear()
     stor.close()
-    shutil.rmtree('a.lvl', True)
-    shutil.rmtree('a.lmdb', True)
+    stor.destroy(yes_im_sure=True)
 
 
-def test_deep_list(stor):
-    s = stone('a', stor, value_type=list)
+def test_deep_operations(stor, deep):
 
-    s[b'li'] = []
-    assert isinstance(s[b'li'], list)
-    assert len(s[b'li']) == 0
+    s = stone('a', stor, value_type=deep)
 
-    s.list_append(b'li', b'a')
-    s.list_append(b'li', b'x')
-    s.list_append(b'li', b'a')
-    assert len(s[b'li']) == 3
+    s[b'deep'] = deep()
+    assert isinstance(s[b'deep'], deep)
+    assert len(s[b'deep']) == 0
 
-    s.list_remove(b'li', b'x')
-    assert len(s[b'li']) == 2
+    s.deep_add(b'deep', b'a')
+    s.deep_add(b'deep', b'x')
+    assert len(s[b'deep']) == 2
+    s.deep_add(b'deep', b'a')
 
-    with pytest.raises(TypeError):
-        s.set_add(b'li', b'a')
+    if isinstance(deep, set):
+        assert len(s[b'deep']) == 2
 
-    with pytest.raises(TypeError):
-        s.set_remove(b'li', b'a')
-
-    cleanup(s)
-
-
-def test_deep_set(stor):
-    s = stone('a', stor, value_type=set)
-
-    s[b'set'] = set()
-    assert isinstance(s[b'set'], set)
-    assert len(s[b'set']) == 0
-
-    s.set_add(b'set', b'a')
-    s.set_add(b'set', b'x')
-    s.set_add(b'set', b'a')
-    assert len(s[b'set']) == 2
-
-    s.set_remove(b'set', b'x')
-    assert len(s[b'set']) == 1
-
-    with pytest.raises(TypeError):
-        s.list_append(b'set', b'a')
-
-    with pytest.raises(TypeError):
-        s.list_remove(b'set', b'a')
+    if isinstance(deep, list):
+        assert len(s[b'deep']) == 3
+        s.deep_remove(b'deep', b'x')
+        assert len(s[b'deep']) == 2
 
     cleanup(s)

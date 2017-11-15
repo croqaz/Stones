@@ -16,7 +16,7 @@ class RedisStore(BaseStore):
     __slots__ = ('redis', 'redis_key')
 
     def __init__(self, redis, redis_key, encoder='cbor', encode_decode=tuple(),
-            value_type=bytes, iterable=tuple(), **kwargs):
+                 value_type=bytes, iterable=tuple(), **kwargs):
         super().__init__(encoder=encoder, encode_decode=encode_decode, value_type=value_type)
         self.redis = redis
         self.redis_key = redis_key
@@ -26,7 +26,6 @@ class RedisStore(BaseStore):
     def close(self):
         # self.redis.close()
         pass
-
 
     def _populate(self, iterable=tuple(), **kwargs):
         hm_set = []
@@ -40,7 +39,6 @@ class RedisStore(BaseStore):
             self.redis.hmset(self.redis_key, *hm_set)
             self.redis.exec()
 
-
     def get(self, key, default=None):
         return self[key] if key in self else default
 
@@ -52,7 +50,6 @@ class RedisStore(BaseStore):
     def delete(self, key):
         return bool(self.redis.hdel(self.redis_key, key))
 
-
     def __getitem__(self, key):
         encoded_value = self.redis.hget(self.redis_key, key)
         return self._decode(encoded_value)
@@ -61,7 +58,6 @@ class RedisStore(BaseStore):
         self.redis.hset(self.redis_key, key, self._encode(value))
 
     __delitem__ = delete
-
 
     def __contains__(self, key):
         return bool(self.redis.hexists(self.redis_key, key))
@@ -76,7 +72,6 @@ class RedisStore(BaseStore):
         items = dict(self.items())
         return self.__class__.__name__ + repr(items)
 
-
     def keys(self):
         return self.redis.hkeys(self.redis_key)
 
@@ -88,7 +83,6 @@ class RedisStore(BaseStore):
         keys = items[::2]
         vals = (self._decode(val) for val in items[1::2])
         return zip(keys, vals)
-
 
     def update(self, iterable=tuple(), **kwargs):
         self._populate(iterable, **kwargs)

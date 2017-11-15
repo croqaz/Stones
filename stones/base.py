@@ -21,53 +21,35 @@ class BaseStore(MutableMapping):
         else:
             raise EncodeException('The store needs an encoder and a decoder')
 
-
     def setdefault(self, key, default=None):
         if key in self:
             return self[key]
         self[key] = default
         return default
 
+    def deep_add(self, key, value):
+        """
+        Add a value in the structure found at key
+        """
+        data = self._type(self.get(key, []))
+        if hasattr(data, 'add'):
+            data.add(value)
+        elif hasattr(data, 'append'):
+            data.append(value)
+        else:
+            raise TypeError('Cannot add value in a "{}"'.format(type(data)))
+        self[key] = data
 
-    def set_add(self, key, value):
+    def deep_remove(self, key, value):
         """
-        Add a value in the set found at key
+        Remove a value from the structure found at key
         """
-        if self._type != set:
-            raise TypeError('Value type must be set')
-        kset = set(self.get(key, set()))
-        kset.add(value)
-        self[key] = kset
-
-
-    def set_remove(self, key, value):
-        """
-        Remove a value from the set found at key
-        """
-        if self._type != set:
-            raise TypeError('Value type must be set')
-        kset = set(self.get(key, set()))
-        kset.discard(value)
-        self[key] = kset
-
-
-    def list_append(self, key, value):
-        """
-        Add a value in the list found at key
-        """
-        if self._type != list:
-            raise TypeError('Value type must be list')
-        klist = list(self.get(key, []))
-        klist.append(value)
-        self[key] = klist
-
-
-    def list_remove(self, key, value):
-        """
-        Remove a value from the list found at key
-        """
-        if self._type != list:
-            raise TypeError('Value type must be list')
-        klist = list(self.get(key, []))
-        klist.remove(value)
-        self[key] = klist
+        data = self._type(self.get(key, []))
+        if hasattr(data, 'discard'):
+            data.discard(value)
+        elif hasattr(data, 'remove'):
+            data.remove(value)
+        else:
+            raise TypeError(
+                'Cannot remove value from a "{}"'.format(type(data)))
+        self[key] = data

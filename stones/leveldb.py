@@ -23,7 +23,7 @@ class LevelStore(BaseStore):
     __slots__ = ('db', '_name')
 
     def __init__(self, name, encoder='cbor', encode_decode=tuple(), value_type=bytes,
-            iterable=tuple(), **kwargs):
+                 iterable=tuple(), **kwargs):
         super().__init__(encoder=encoder, encode_decode=encode_decode, value_type=value_type)
         self._name = name + '.lvl'
         self.db = plyvel.DB(self._name, create_if_missing=True)
@@ -33,14 +33,12 @@ class LevelStore(BaseStore):
     def close(self):
         self.db.close()
 
-
     def _populate(self, iterable=tuple(), **kwargs):
         with contextlib.suppress(AttributeError):
             iterable = iterable.items()
         with self.db.write_batch() as batch:
             for key, value in itertools.chain(iterable, kwargs.items()):
                 batch.put(key, self._encode(value))
-
 
     def get(self, key, default=None):
         encoded_value = self.db.get(key, False)
@@ -54,7 +52,6 @@ class LevelStore(BaseStore):
     def delete(self, key):
         return self.db.delete(key)
 
-
     def __getitem__(self, key):
         encoded_value = self.db.get(key)
         return self._decode(encoded_value)
@@ -63,7 +60,6 @@ class LevelStore(BaseStore):
         return self.db.put(key, self._encode(value))
 
     __delitem__ = delete
-
 
     def __contains__(self, key):
         return bool(self.db.get(key))
@@ -77,7 +73,6 @@ class LevelStore(BaseStore):
     def __repr__(self):
         items = dict(self.items())
         return self.__class__.__name__ + repr(items)
-
 
     def keys(self):
         keys_list = []
@@ -96,7 +91,6 @@ class LevelStore(BaseStore):
         for key, value in self.db.iterator(include_key=True, include_value=True):
             items_list.append((key, self._decode(value)))
         return items_list
-
 
     def update(self, iterable=tuple(), **kwargs):
         self._populate(iterable, **kwargs)

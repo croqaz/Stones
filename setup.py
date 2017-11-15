@@ -31,7 +31,7 @@ setup(
     packages = ['stones', 'tests'],
     include_package_data = True,
     zip_safe = True,
-    python_requires = '>= 3.6',
+    python_requires = '>= 3.5',
     extras_require = {
         'dev': ['flake8', 'codecov'],
         'test': ['pytest', 'pytest-cov'],
