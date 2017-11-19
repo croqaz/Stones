@@ -1,21 +1,18 @@
 
 import os
 import sys
+import shutil
 import pytest
 sys.path.insert(1, os.getcwd())
-from stones import DbmStore
+from stones import MemoryStore
 from common import *
 
-DB = 'a'
 
 @pytest.fixture(scope='function')
 def stor():
-    d = DbmStore(DB)
-    d.clear()
+    d = MemoryStore()
     repr(d)
     yield d
-    d.close()
-    d.destroy(True)
 
 
 def test_empty_db(stor):
@@ -31,13 +28,16 @@ def test_get_set(stor):
 
 
 def test_populate():
-    d = DbmStore(DB, iterable=[(b'a', b'b'), (b'c', b'd')])
+    d = MemoryStore(iterable=[(b'a', b'b'), (b'c', b'd')])
     assert len(d) == 2
-    assert list(d.items()) == [(b'c', b'd'), (b'a', b'b')]
+    assert list(d.items()) == [(b'a', b'b'), (b'c', b'd')]
     d.update({b'a': b'x'})
-    assert list(d.items()) == [(b'c', b'd'), (b'a', b'x')]
+    assert list(d.items()) == [(b'a', b'x'), (b'c', b'd')]
+    d.update([(b'a', b'z')])
+    assert list(d.items()) == [(b'a', b'z'), (b'c', b'd')]
+    d.clear()
     d.close()
-    d.destroy(True)
+    d.destroy(yes_im_sure=True)
 
 
 def test_iter(stor):

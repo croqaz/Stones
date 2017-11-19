@@ -1,6 +1,6 @@
 
-#- rev: v2 -
-#- hash: R0QC4K -
+#- rev: v3 -
+#- hash: JHSNSV -
 
 from collections.abc import MutableMapping
 from .exceptions import EncodeException

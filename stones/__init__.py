@@ -2,11 +2,6 @@
 # flake8: noqa
 
 from .memory import MemoryStore
-from .dbm import DbmStore
-from .leveldb import LevelStore
-from .lmdb import LmdbStore
-from .redis import RedisStore
-
 from .encoders import encoders
 from .exceptions import StoreException
 from .exceptions import EncodeException

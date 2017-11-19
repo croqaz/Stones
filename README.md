@@ -1,8 +1,8 @@
 
 # Stones
-[![Build Status](https://travis-ci.org/ShinyTrinkets/Stones.svg?branch=master)](https://travis-ci.org/ShinyTrinkets/Stones) [![Codecov](https://codecov.io/gh/ShinyTrinkets/Stones/branch/master/graph/badge.svg)](https://codecov.io/gh/ShinyTrinkets/Stones) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![Build Status](https://travis-ci.org/ShinyTrinkets/Stones.svg?branch=master)](https://travis-ci.org/ShinyTrinkets/Stones) [![Codecov](https://codecov.io/gh/ShinyTrinkets/Stones/branch/master/graph/badge.svg)](https://codecov.io/gh/ShinyTrinkets/Stones) ![Python 3.5](https://img.shields.io/badge/python-3.5-blue.svg) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-Persistent key-value containers, compatible with Python dict, that can be backed by LevelDB, LMDB, or Redis.
+Persistent key-value containers, compatible with Python dict.
 
 ![Stones image](https://raw.githubusercontent.com/ShinyTrinkets/stones/master/images/stones-image.jpg)
 

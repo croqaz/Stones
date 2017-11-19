@@ -6,28 +6,19 @@ pytest-cov
 # Dev coverage
 codecov
 # Stick headers
-# git+https://github.com/croqaz/Sticky
+# git+https://github.com/ShinyTrinkets/Sticky
 
 
 # UJSON (optional)
 ujson
 
 # SimpleJson (optional)
-# simplejson ~= 3.11
+# simplejson
 
 # CBOR2 (optional)
 cbor2 ~= 4.0
 
 # Msgpack (optional)
 # msgpack-python ~= 0.4
+# Need the experimental 0.5 version
 git+https://github.com/msgpack/msgpack-python
-
-
-# LevelDB (optional)
-plyvel
-
-# LMDB (optional)
-lmdb
-
-# Python-redis (optional)
-python_redis

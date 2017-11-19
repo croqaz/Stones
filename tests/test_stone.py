@@ -9,18 +9,23 @@ from stones.base import *
 from stones import *
 
 
-def test_base_store():
+def test_crash_base_store():
     # TypeError: Can't instantiate abstract class BaseStore
     with pytest.raises(TypeError):
         b = BaseStore()
     with pytest.raises(TypeError):
         b = BaseStore('pickle')
+    # Invalid store name
     with pytest.raises(StoreException):
         s = stone('a', 'xxx')
+    # Invalid encoder name
     with pytest.raises(EncodeException):
         s = stone('a', encoder='xxx')
+    # Encoder required for sets and lists
     with pytest.raises(EncodeException):
-        s = stone('a', 'lmdb', value_type=set, encoder=None, encode_decode=None)
+        s = stone('a', value_type=set, encoder=None, encode_decode=None)
+    with pytest.raises(EncodeException):
+        s = stone('a', value_type=list, encoder=None, encode_decode=None)
 
 
 def test_default_stone():
@@ -31,35 +36,20 @@ def test_default_stone():
 
 
 def test_base_store_encoder_pair():
-    s = stone('a', 'lmdb', value_type=set, encoder=None, encode_decode=(encode_json, decode_json))
+    s = stone('a', 'memory', value_type=set, encoder=None, encode_decode=(encode_json, decode_json))
     assert s._encode == encode_json
     assert s._decode == decode_json
-    s.clear()
-    shutil.rmtree('a.lvl', True)
 
 
-def test_memory_store():
-    s = stone('a', 'memory', 'noop')
-    assert s._encode == noop
+@pytest.fixture(scope='function', params=['json', 'pickle', 'cbor', 'msgpack'])
+def codec(request):
+    return request.param
+
+
+def test_encoders(codec):
+    s = stone('a', 'memory', codec)
+    assert s._encode == globals()['encode_' + codec]
     assert isinstance(s, MemoryStore)
-    s = stone('a', persistence='memory', encoder='noop')
-    assert s._encode == noop
+    s = stone('a', persistence='memory', encoder=codec)
+    assert s._encode == globals()['encode_' + codec]
     assert isinstance(s, MemoryStore)
-
-
-def test_level_store():
-    s = stone('a', 'level', encoder='cbor', value_type=list)
-    assert s._encode == encode_cbor
-    assert isinstance(s, BaseStore)
-    assert isinstance(s, LevelStore)
-    s.clear()
-    shutil.rmtree('a.lvl', True)
-
-
-def test_lmdb_store():
-    s = stone('a', 'lmdb', encoder='msgpack', value_type=list)
-    assert s._encode == encode_msgpack
-    assert isinstance(s, BaseStore)
-    assert isinstance(s, LmdbStore)
-    s.clear()
-    shutil.rmtree('a.lmdb', True)

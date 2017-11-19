@@ -1,6 +1,6 @@
 
-#- rev: v4 -
-#- hash: EAKY6Z -
+#- rev: v5 -
+#- hash: N0Z/OO -
 
 import pickle
 
@@ -17,16 +17,19 @@ try:
     import cbor2
     from cbor2.types import CBORTag
 except ModuleNotFoundError:
+    cbor2 = None
     print('CBOR can be installed at PyPi.python.org/pypi/cbor2')
 
 try:
     import msgpack
 except ModuleNotFoundError:
+    msgpack = None
     print('MessagePack can be installed at PyPi.python.org/pypi/msgpack-python')
 
 
 TUP_FLAG = b'__(,)__'
 SET_FLAG = b'__{,}__'
+FROZEN_SET_FLAG = b'__f{}__'
 
 
 def noop(data):
@@ -115,13 +118,17 @@ encoders = {
     'json': {
         'encode': encode_json,
         'decode': decode_json
-    },
-    'cbor': {
+    }
+}
+
+if cbor2:
+    encoders['cbor'] = {
         'encode': encode_cbor,
         'decode': decode_cbor
-    },
-    'msgpack': {
+    }
+
+if msgpack:
+    encoders['msgpack'] = {
         'encode': encode_msgpack,
         'decode': decode_msgpack
     }
-}

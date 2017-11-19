@@ -6,6 +6,11 @@ sys.path.insert(1, os.getcwd())
 from stones.encoders import encoders
 
 
+@pytest.fixture(scope='function', params=['noop', 'json', 'pickle', 'cbor', 'msgpack'])
+def codec(request):
+    return request.param
+
+
 @pytest.fixture(scope='function', params=[
     b'qwe ASD 123',
     [b'a', b'qwerty'],
@@ -16,27 +21,9 @@ def value(request):
     return request.param
 
 
-def test_encode_pickle(value):
-    txt0 = encoders['pickle']['encode'](value)
-    txt1 = encoders['pickle']['decode'](txt0)
-    assert txt1 == value
-
-
-def test_encode_json(value):
-    txt0 = encoders['json']['encode'](value)
-    txt1 = encoders['json']['decode'](txt0)
-    assert txt1 == value
-
-
-def test_encode_cbor(value):
-    if isinstance(value, tuple):
+def test_encode(codec, value):
+    if codec == 'cbor' and isinstance(value, tuple):
         return
-    txt0 = encoders['cbor']['encode'](value)
-    txt1 = encoders['cbor']['decode'](txt0)
-    assert txt1 == value
-
-
-def test_encode_msgpack(value):
-    txt0 = encoders['msgpack']['encode'](value)
-    txt1 = encoders['msgpack']['decode'](txt0)
+    txt0 = encoders[codec]['encode'](value)
+    txt1 = encoders[codec]['decode'](txt0)
     assert txt1 == value
