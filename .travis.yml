@@ -1,15 +1,8 @@
 language: python
 
 python:
+  - 3.5
   - 3.6
-
-services:
-  - riak
-  - redis-server
-
-before_install:
-  - sudo apt update -qq
-  - sudo apt install -y -qq libleveldb-dev liblmdb-dev
 
 install:
   - pip install -r requirements.txt

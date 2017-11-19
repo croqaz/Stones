@@ -32,6 +32,6 @@ def test_deep_operations(deep):
         s.deep_remove(b'deep', b'x')
         assert len(s[b'deep']) == 2
 
-    d.clear()
-    d.close()
-    d.destroy(yes_im_sure=True)
+    s.clear()
+    s.close()
+    s.destroy(yes_im_sure=True)
