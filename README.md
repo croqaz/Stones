@@ -1,21 +1,21 @@
 
 # Stones
-[![Build Status](https://travis-ci.org/croqaz/Stones.svg?branch=master)](https://travis-ci.org/croqaz/Stones) [![Codecov](https://codecov.io/gh/croqaz/Stones/branch/master/graph/badge.svg)](https://codecov.io/gh/croqaz/Stones) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![Build Status](https://travis-ci.org/ShinyTrinkets/Stones.svg?branch=master)](https://travis-ci.org/ShinyTrinkets/Stones) [![Codecov](https://codecov.io/gh/ShinyTrinkets/Stones/branch/master/graph/badge.svg)](https://codecov.io/gh/ShinyTrinkets/Stones) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 Persistent key-value containers, compatible with Python dict, that can be backed by LevelDB, LMDB, or Redis.
 
-![Stones image](https://raw.githubusercontent.com/croqaz/stones/master/images/stones-image.jpg)
+![Stones image](https://raw.githubusercontent.com/ShinyTrinkets/stones/master/images/stones-image.jpg)
 
 
 ### Features and limitations
 
 - the stores have exactly the same methods as a Python dict (get, set, delete, update, keys, values, items, contains, length, clear)
-- because the storage is LevelDB, LMDB, or Redis, the keys can only be bytes
-- the values are actually also bytes, but the encoder converts your data structure into bytes
-- there are several encoders available: pickle, cbor2, msgpack, JSON
+- limitation: the keys can only be bytes
+- the values are actually also bytes, but an encoder converts your data structure into bytes
+- there are several encoders available: pickle, JSON and optional: cbor2, msgpack
 - you can easily add your own encoder
+- only the memory store available by default (not persistent, a wrapper for Python dict)
 - after the data was saved on HDD, when re-opening the store, you must use the same encoder (makes sense, right?)
-- a memory store is also available (not persistent)
 
 
 ### Usage
@@ -66,7 +66,7 @@ stor.keys()
 
 ### Similar projects
 
-* [Lukedeo/Cupboard](https://github.com/lukedeo/Cupboard) - awesome, unfinished
+* [Lukedeo/Cupboard](https://github.com/lukedeo/Cupboard) - awesome
 * [Lcrees/Shove](https://bitbucket.org/lcrees/shove) - unmaintained (2 years)
 * [Datastore](https://github.com/datastore/datastore) - unmaintained (4 years)
 * [ShuhaoWu/Kvkit](https://github.com/shuhaowu/kvkit) - unmaintained (4 years)
