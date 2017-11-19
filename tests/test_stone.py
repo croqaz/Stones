@@ -15,9 +15,6 @@ def test_crash_base_store():
         b = BaseStore()
     with pytest.raises(TypeError):
         b = BaseStore('pickle')
-    # Invalid store name
-    with pytest.raises(StoreException):
-        s = stone('a', 'xxx')
     # Invalid encoder name
     with pytest.raises(EncodeException):
         s = stone('a', encoder='xxx')
@@ -36,7 +33,7 @@ def test_default_stone():
 
 
 def test_base_store_encoder_pair():
-    s = stone('a', 'memory', value_type=set, encoder=None, encode_decode=(encode_json, decode_json))
+    s = stone('a', value_type=set, encoder=None, encode_decode=(encode_json, decode_json))
     assert s._encode == encode_json
     assert s._decode == decode_json
 
@@ -47,9 +44,6 @@ def codec(request):
 
 
 def test_encoders(codec):
-    s = stone('a', 'memory', codec)
-    assert s._encode == globals()['encode_' + codec]
-    assert isinstance(s, MemoryStore)
-    s = stone('a', persistence='memory', encoder=codec)
+    s = stone('a', encoder=codec)
     assert s._encode == globals()['encode_' + codec]
     assert isinstance(s, MemoryStore)

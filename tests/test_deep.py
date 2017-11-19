@@ -24,10 +24,12 @@ def test_deep_operations(deep):
     assert len(s[b'deep']) == 2
     s.deep_add(b'deep', b'a')
 
-    if isinstance(deep, set):
+    if deep == set:
         assert len(s[b'deep']) == 2
+        s.deep_remove(b'deep', b'x')
+        assert len(s[b'deep']) == 1
 
-    if isinstance(deep, list):
+    elif deep == list:
         assert len(s[b'deep']) == 3
         s.deep_remove(b'deep', b'x')
         assert len(s[b'deep']) == 2
@@ -35,3 +37,17 @@ def test_deep_operations(deep):
     s.clear()
     s.close()
     s.destroy(yes_im_sure=True)
+
+
+def test_crash_deep():
+    s = stone('a', value_type=frozenset)
+
+    s[b'deep'] = frozenset([1])
+    assert isinstance(s[b'deep'], frozenset)
+    assert len(s[b'deep']) == 1
+
+    with pytest.raises(TypeError):
+        s.deep_add(b'deep', b'a')
+
+    with pytest.raises(TypeError):
+        s.deep_remove(b'deep', b'a')

@@ -50,6 +50,5 @@ class BaseStore(MutableMapping):
         elif hasattr(data, 'remove'):
             data.remove(value)
         else:
-            raise TypeError(
-                'Cannot remove value from a "{}"'.format(type(data)))
+            raise TypeError('Cannot del value from a "{}"'.format(type(data)))
         self[key] = data
