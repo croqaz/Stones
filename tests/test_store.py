@@ -4,13 +4,13 @@ import sys
 import shutil
 import pytest
 sys.path.insert(1, os.getcwd())
-from stones import MemoryStore
+from stones import MemoryStore as Store
 from common import *
 
 
 @pytest.fixture(scope='function')
 def stor():
-    d = MemoryStore()
+    d = Store()
     repr(d)
     yield d
 
@@ -28,7 +28,7 @@ def test_get_set(stor):
 
 
 def test_populate():
-    d = MemoryStore(iterable=[(b'a', b'b'), (b'c', b'd')])
+    d = Store(iterable=[(b'a', b'b'), (b'c', b'd')])
     assert len(d) == 2
     assert list(d.items()) == [(b'a', b'b'), (b'c', b'd')]
     d.update({b'a': b'x'})

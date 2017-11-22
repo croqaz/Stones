@@ -10,19 +10,17 @@ from .base import BaseStore
 class MemoryStore(BaseStore):
     """
     Pure memory store.
+    Inspired from builtin collections.UserDict.
     """
 
     __slots__ = ('db',)
 
-    def __init__(self, *args, encoder='noop', encode_decode=tuple(),
-                 value_type=bytes, iterable=tuple(), **kwargs):
-        super().__init__(encoder=encoder, encode_decode=encode_decode, value_type=value_type)
+    def __init__(self, *arg, serialize='noop', dump_load=tuple(),
+                 value_type=bytes, iterable=tuple(), kwargs={}):
+        super().__init__(serialize=serialize, dump_load=dump_load, value_type=value_type)
         self.db = {}
         if iterable or kwargs:
             self._populate(iterable, **kwargs)
-
-    def close(self):
-        pass
 
     def _populate(self, iterable=tuple(), **kwargs):
         with contextlib.suppress(AttributeError):
@@ -34,7 +32,7 @@ class MemoryStore(BaseStore):
         encoded_value = self.db.get(key)
         return self._decode(encoded_value) if encoded_value else default
 
-    def put(self, key, value, overwrite=False):
+    def put(self, key, value, overwrite=True):
         if not overwrite and self.db.get(key):
             return
         self.db[key] = self._encode(value)
@@ -42,12 +40,9 @@ class MemoryStore(BaseStore):
     def delete(self, key):
         del self.db[key]
 
-    def __getitem__(self, key):
-        encoded_value = self.db.get(key)
-        return self._decode(encoded_value)
+    __getitem__ = get
 
-    def __setitem__(self, key, value):
-        self.db[key] = self._encode(value)
+    __setitem__ = put
 
     __delitem__ = delete
 
@@ -74,6 +69,9 @@ class MemoryStore(BaseStore):
 
     def update(self, iterable=tuple(), **kwargs):
         self._populate(iterable, **kwargs)
+
+    def close(self):
+        pass
 
     def clear(self):
         self.db.clear()

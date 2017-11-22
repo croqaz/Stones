@@ -3,25 +3,49 @@
 #- hash: JHSNSV -
 
 from collections.abc import MutableMapping
-from .exceptions import EncodeException
-from .encoders import encoders
+from .exceptions import EncoderException
+from .serialize import serializers
 
 
 class BaseStore(MutableMapping):
+    """
+    The Store represents storage for any key-value pair.
+
+    This is an abstract class and should not be used directly.
+    """
 
     __slots__ = ('_type', '_encode', '_decode')
 
-    def __init__(self, encoder=None, encode_decode=tuple(), value_type=bytes):
+    def __init__(self, serialize=None, dump_load=tuple(), value_type=bytes):
         self._type = value_type
-        if encoder and encoder in encoders:
-            self._encode = encoders[encoder]['encode']
-            self._decode = encoders[encoder]['decode']
-        elif encode_decode and len(encode_decode) == 2:
-            self._encode, self._decode = encode_decode
+        if serialize and serialize in serializers:
+            self._encode = serializers[serialize]['encode']
+            self._decode = serializers[serialize]['decode']
+        elif dump_load and len(dump_load) == 2:
+            self._encode, self._decode = dump_load
         else:
-            raise EncodeException('The store needs an encoder and a decoder')
+            raise EncoderException('The store needs an encoder and a decoder')
+
+    def get(self, key):
+        raise NotImplementedError
+
+    def put(self, key, value):
+        raise NotImplementedError
+
+    def delete(self, key):
+        raise NotImplementedError
+
+    def close(self):
+        raise NotImplementedError
+
+    def destroy(self, yes_im_sure=False):
+        raise NotImplementedError
 
     def setdefault(self, key, default=None):
+        """
+        If key is in the dictionary, return its value.
+        If not, insert key with a value of default and return default.
+        """
         if key in self:
             return self[key]
         self[key] = default
@@ -29,7 +53,8 @@ class BaseStore(MutableMapping):
 
     def deep_add(self, key, value):
         """
-        Add a value in the structure found at key
+        Add a value in the deep structure found at key.
+        The deep structure can be a list, or a set.
         """
         data = self._type(self.get(key, []))
         if hasattr(data, 'add'):
@@ -42,7 +67,8 @@ class BaseStore(MutableMapping):
 
     def deep_remove(self, key, value):
         """
-        Remove a value from the structure found at key
+        Remove a value from the deep structure found at key.
+        The deep structure can be a list, or a set.
         """
         data = self._type(self.get(key, []))
         if hasattr(data, 'discard'):

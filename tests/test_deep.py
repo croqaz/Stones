@@ -13,7 +13,7 @@ def deep(request):
 
 
 def test_deep_operations(deep):
-    s = stone('a', value_type=deep)
+    s = stone(name='a', value_type=deep)
 
     s[b'deep'] = deep()
     assert isinstance(s[b'deep'], deep)
@@ -40,7 +40,7 @@ def test_deep_operations(deep):
 
 
 def test_crash_deep():
-    s = stone('a', value_type=frozenset)
+    s = stone(name='a', value_type=frozenset)
 
     s[b'deep'] = frozenset([1])
     assert isinstance(s[b'deep'], frozenset)

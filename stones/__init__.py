@@ -2,14 +2,17 @@
 # flake8: noqa
 
 from .memory import MemoryStore
-from .encoders import encoders
-from .exceptions import StoreException
-from .exceptions import EncodeException
+from .serialize import serializers
+from .exceptions import EncoderException
 
 
-def stone(name, store=MemoryStore, encoder='pickle', encode_decode=tuple(),
+def stone(name, store=MemoryStore,
+          serialize='pickle', dump_load=tuple(),
           value_type=bytes, options={}):
-    if encoder and encoder not in encoders:
-        raise EncodeException('Invalid encoder name "{}"'.format(encoder))
-    return store(name, encoder=encoder, encode_decode=encode_decode,
+    """
+    Convenience wrapper for returning a Store instance.
+    """
+    if serialize and serialize not in serializers:
+        raise EncoderException('Invalid serializer name "{}"'.format(serialize))
+    return store(name, serialize=serialize, dump_load=dump_load,
                  value_type=value_type, **options)

@@ -20,7 +20,7 @@ def check_get_put(stor):
     assert len(stor) == 1
     assert stor.get(b'a') == b'a'
 
-    stor.put(b'a', b'aa')
+    stor.put(b'a', b'aa', overwrite=False)
     # Value not changed
     assert stor.get(b'a') == b'a'
 
@@ -30,7 +30,7 @@ def check_get_put(stor):
     assert stor.get(b'a') == b'aa'
     assert stor.get(b'a', False) == b'aa'
 
-    stor.put(b'x', b'xxx')
+    stor.put(b'x', b'xxx', overwrite=True)
 
     assert len(stor) == 2
     assert stor.get(b'x') == b'xxx'

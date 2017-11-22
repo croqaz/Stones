@@ -4,7 +4,7 @@ import sys
 import shutil
 import pytest
 sys.path.insert(1, os.getcwd())
-from stones.encoders import *
+from stones.serialize import *
 from stones.base import *
 from stones import *
 
@@ -15,14 +15,14 @@ def test_crash_base_store():
         b = BaseStore()
     with pytest.raises(TypeError):
         b = BaseStore('pickle')
-    # Invalid encoder name
-    with pytest.raises(EncodeException):
-        s = stone('a', encoder='xxx')
+    # Invalid serializer name
+    with pytest.raises(EncoderException):
+        s = stone('a', serialize='xxx')
     # Encoder required for sets and lists
-    with pytest.raises(EncodeException):
-        s = stone('a', value_type=set, encoder=None, encode_decode=None)
-    with pytest.raises(EncodeException):
-        s = stone('a', value_type=list, encoder=None, encode_decode=None)
+    with pytest.raises(EncoderException):
+        s = stone('a', value_type=set, serialize=None, dump_load=None)
+    with pytest.raises(EncoderException):
+        s = stone('a', value_type=list, serialize=None, dump_load=None)
 
 
 def test_default_stone():
@@ -33,7 +33,7 @@ def test_default_stone():
 
 
 def test_base_store_encoder_pair():
-    s = stone('a', value_type=set, encoder=None, encode_decode=(encode_json, decode_json))
+    s = stone('a', value_type=set, serialize=None, dump_load=(encode_json, decode_json))
     assert s._encode == encode_json
     assert s._decode == decode_json
 
@@ -43,7 +43,7 @@ def codec(request):
     return request.param
 
 
-def test_encoders(codec):
-    s = stone('a', encoder=codec)
+def test_serializer(codec):
+    s = stone('a', serialize=codec)
     assert s._encode == globals()['encode_' + codec]
     assert isinstance(s, MemoryStore)
