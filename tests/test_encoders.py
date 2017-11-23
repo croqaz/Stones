@@ -6,7 +6,9 @@ sys.path.insert(1, os.getcwd())
 from stones.serialize import serializers
 
 
-@pytest.fixture(scope='function', params=['noop', 'json', 'pickle', 'cbor', 'msgpack'])
+@pytest.fixture(scope='function', params=[
+    'noop', 'json', 'pickle', 'cbor', 'msgpack'
+])
 def codec(request):
     return request.param
 
@@ -16,6 +18,7 @@ def codec(request):
     [b'x', b'qwerty'],
     {b'y', b'qwerty'},
     (b'yes', b'no'),
+    frozenset([b'q', b'e']),
     {b'yes': b'y', b'no': b'n'},
     # {b's': {b'a', b'b'}, b'f': frozendict([b'a', b'b'])} # Doesn't work yet
 ])
