@@ -5,9 +5,8 @@ CBOR2 and MsgPack are available with PIP.
 Other than the normal objects, available in all languages,
 the `tuple`, `set` and `frozenset` are also supported.
 """
-
-#- rev: v5 -
-#- hash: N0Z/OO -
+#- rev: v6 -
+#- hash: N3R8FI -
 
 import pickle
 from io import BytesIO

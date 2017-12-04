@@ -9,7 +9,7 @@
 
 The idea behind this project is to have a common interface for a multitude of persistent key-value stores, easy to use and extend, with some extra built-in features as bonus. Inspired from [Datastore](https://github.com/datastore/datastore) and [MemDown](https://github.com/level/memdown).
 
-**WORK IN PROGRESS, DON'T JUDGE**
+⚠️ **WORK IN PROGRESS, DON'T JUDGE** 🛑
 
 
 ## Features and Limitations

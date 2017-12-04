@@ -1,6 +1,6 @@
 
-#- rev: v4 -
-#- hash: MKBANT -
+#- rev: v5 -
+#- hash: SFIQWK -
 
 import itertools
 import contextlib

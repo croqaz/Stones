@@ -1,11 +1,6 @@
 
-# def ensure_string(text):
-#     if isinstance(text, str):
-#         return text
-#     if isinstance(text, bytes):
-#         return text.decode('utf')
-#     raise TypeError('Cannot convert {} type into string'.format(type(text)))
-
+#- rev: v1 -
+#- hash: 2PIP7P -
 
 def ensure_bytes(text):
     if isinstance(text, bytes):

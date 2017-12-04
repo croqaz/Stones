@@ -29,4 +29,4 @@ test:
 	${ENV}/pytest -ra --capture=no --verbose tests/
 
 icky:
-	${ENV}/python -m sticky.cli -s stones/
+	${ENV}/python -m sticky.cli -s stones/ -i __*__.*,exception*
