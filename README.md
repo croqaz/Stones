@@ -1,15 +1,16 @@
 
 # 🗿Stones
 
-[![Build Status](https://travis-ci.org/ShinyTrinkets/Stones.svg?branch=master)](https://travis-ci.org/ShinyTrinkets/Stones) [![Codecov](https://codecov.io/gh/ShinyTrinkets/Stones/branch/master/graph/badge.svg)](https://codecov.io/gh/ShinyTrinkets/Stones) ![Python 3.5](https://img.shields.io/badge/python-3.5-blue.svg)
+[![Build Status](https://travis-ci.org/croqaz/Stones.svg?branch=master)](https://travis-ci.org/croqaz/Stones) [![Codecov](https://codecov.io/gh/croqaz/Stones/branch/master/graph/badge.svg)](https://codecov.io/gh/croqaz/Stones) ![Python 3.5](https://img.shields.io/badge/python-3.5-blue.svg)
 
 > Base library for persistent key-value stores, 100% compatible with Python dict.
 
-![Stones image](https://raw.githubusercontent.com/ShinyTrinkets/stones/master/images/stones-image.jpg)
+![Stones image](https://raw.githubusercontent.com/croqaz/stones/master/images/stones-image.jpg)
 
 The idea behind this project is to have a common interface for a multitude of persistent key-value stores, easy to use and extend, with some extra built-in features as bonus. Inspired from [Datastore](https://github.com/datastore/datastore) and [MemDown](https://github.com/level/memdown).
 
-⚠️ **WORK IN PROGRESS, DON'T JUDGE** 🛑
+
+⚠️ **This library is no longer maintained; PLEASE DON'T JUDGE** 🛑
 
 
 ## Features and Limitations
@@ -29,7 +30,7 @@ The idea behind this project is to have a common interface for a multitude of pe
 This project uses [Python 3.5+](https://www.python.org/) and [pip](https://pip.pypa.io/). A [virtual environment](https://virtualenv.pypa.io/) is strongly encouraged.
 
 ```sh
-$ pip install git+https://github.com/ShinyTrinkets/Stones
+$ pip install git+https://github.com/croqaz/Stones
 ```
 
 
