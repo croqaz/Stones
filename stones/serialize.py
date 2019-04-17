@@ -5,8 +5,6 @@ CBOR2 and MsgPack are available with PIP.
 Other than the normal objects, available in all languages,
 the `tuple`, `set` and `frozenset` are also supported.
 """
-#- rev: v6 -
-#- hash: N3R8FI -
 
 import pickle
 from io import BytesIO
@@ -35,7 +33,6 @@ try:
 except ModuleNotFoundError:
     msgpack = None
     print('MessagePack can be installed at PyPi.python.org/pypi/msgpack-python')
-
 
 TUP_FLAG = b'__(,)__'
 SET_FLAG = b'__{,}__'
@@ -177,8 +174,7 @@ def encode_msgpack(data):
     """
     Serialize an object using MsgPack.
     """
-    return msgpack.dumps(data, use_bin_type=True, strict_types=True,
-        default=_convert_python_obj)
+    return msgpack.dumps(data, use_bin_type=True, strict_types=True, default=_convert_python_obj)
 
 
 def decode_msgpack(data):
@@ -204,13 +200,7 @@ serializers = {
 }
 
 if cbor2:
-    serializers['cbor'] = {
-        'encode': encode_cbor,
-        'decode': decode_cbor
-    }
+    serializers['cbor'] = {'encode': encode_cbor, 'decode': decode_cbor}
 
 if msgpack:
-    serializers['msgpack'] = {
-        'encode': encode_msgpack,
-        'decode': decode_msgpack
-    }
+    serializers['msgpack'] = {'encode': encode_msgpack, 'decode': decode_msgpack}

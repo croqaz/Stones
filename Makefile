@@ -1,5 +1,5 @@
 
-ENV=./env/bin
+ENV=
 
 clean:
 	rm -rf `find . -name __pycache__`
@@ -17,16 +17,13 @@ clean:
 	python3 setup.py clean
 
 update:
-	${ENV}/pip install -U -r requirements.txt
+	${ENV}pip install -U -r requirements.txt
 
 lint:
-	${ENV}/flake8 stones
+	${ENV}flake8 stones
 
 coverage:
-	${ENV}/pytest --cov-report term --cov=stones tests/
+	${ENV}pytest --cov-report term --cov=stones tests/
 
 test:
-	${ENV}/pytest -ra --capture=no --verbose tests/
-
-icky:
-	${ENV}/python -m sticky.cli -s stones/ -i __*__.*,exception*
+	${ENV}pytest -ra --capture=no --verbose tests/

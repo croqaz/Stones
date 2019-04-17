@@ -1,7 +1,3 @@
-
-#- rev: v4 -
-#- hash: 5E4EBQ -
-
 from collections.abc import MutableMapping
 from .exceptions import EncoderException
 from .serialize import serializers

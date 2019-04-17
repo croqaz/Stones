@@ -16,9 +16,7 @@ ujson
 # simplejson
 
 # CBOR2 (optional)
-cbor2 ~= 4.0
+cbor2 ~= 4.1
 
 # Msgpack (optional)
-# msgpack-python ~= 0.4
-# Need the experimental 0.5 version
-git+https://github.com/msgpack/msgpack-python
+msgpack ~= 0.6

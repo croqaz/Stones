@@ -1,7 +1,4 @@
 
-#- rev: v1 -
-#- hash: 2PIP7P -
-
 def ensure_bytes(text):
     if isinstance(text, bytes):
         return text

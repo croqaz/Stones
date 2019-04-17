@@ -1,7 +1,3 @@
-
-#- rev: v5 -
-#- hash: SFIQWK -
-
 import itertools
 import contextlib
 from .base import BaseStore
@@ -15,8 +11,13 @@ class MemoryStore(BaseStore):
 
     __slots__ = ('db',)
 
-    def __init__(self, *arg, serialize='noop', dump_load=tuple(),
-                 value_type=bytes, iterable=tuple(), kwargs={}):
+    def __init__(self,
+                 *arg,
+                 serialize='noop',
+                 dump_load=tuple(),
+                 value_type=bytes,
+                 iterable=tuple(),
+                 kwargs={}):
         super().__init__(serialize=serialize, dump_load=dump_load, value_type=value_type)
         self.db = {}
         if iterable or kwargs:

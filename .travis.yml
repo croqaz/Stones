@@ -1,14 +1,13 @@
 language: python
 
 python:
-  - 3.5
   - 3.6
 
 install:
-  - pip install -r requirements.txt
+  - make update
 
 script:
-  - flake8 stones
+  - make lint
   - pytest -ra -sv --cov=stones tests/
 
 after_success:
