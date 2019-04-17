@@ -1,7 +1,7 @@
 
 # 🗿Stones
 
-[![Build Status](https://travis-ci.org/croqaz/Stones.svg?branch=master)](https://travis-ci.org/croqaz/Stones) [![Codecov](https://codecov.io/gh/croqaz/Stones/branch/master/graph/badge.svg)](https://codecov.io/gh/croqaz/Stones) ![Python 3.5](https://img.shields.io/badge/python-3.5-blue.svg)
+[![Build Status](https://travis-ci.org/croqaz/Stones.svg?branch=master)](https://travis-ci.org/croqaz/Stones) [![Codecov](https://codecov.io/gh/croqaz/Stones/branch/master/graph/badge.svg)](https://codecov.io/gh/croqaz/Stones) ![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)
 
 > Base library for persistent key-value stores, 100% compatible with Python dict.
 
@@ -18,7 +18,7 @@ The idea behind this project is to have a common interface for a multitude of pe
 - the same API that you already know from [Python dict](https://docs.python.org/3/library/stdtypes.html#mapping-types-dict)
 - thread safe updates
 - excellent test coverage (>90%)
-- only the Memory Store is available by default, to be used as an example. Other Stores _will be available soon_ ™ (LevelDB, LMDB, DBM, Redis, etc).
+- the Memory Store and LMDB are available by default, to be used as an example. Other Stores _will be available soon_ ™ (LevelDB, DBM, Redis, etc).
 - 1st limitation: the keys can only be bytes. This is actually more of a feature.
 - 2nd limitation: the values are actually also bytes, but a serializer (default is Pickle) converts the data structure into bytes
 - there are several serializers available: Pickle, JSON and optional: cbor2, msgpack. You can easily add your own serializer, please check the documentation below.
@@ -27,7 +27,7 @@ The idea behind this project is to have a common interface for a multitude of pe
 
 ## Install
 
-This project uses [Python 3.5+](https://www.python.org/) and [pip](https://pip.pypa.io/). A [virtual environment](https://virtualenv.pypa.io/) is strongly encouraged.
+This project uses [Python 3.6+](https://www.python.org/) and [pip](https://pip.pypa.io/). A [virtual environment](https://virtualenv.pypa.io/) is strongly encouraged.
 
 ```sh
 $ pip install git+https://github.com/croqaz/Stones
@@ -36,11 +36,11 @@ $ pip install git+https://github.com/croqaz/Stones
 
 ## Usage
 
-```python
-from stones import stone
+```py
+from stones import stone, LmdbStore
 
-# Create a new persistent dictionary, backed by LevelDB
-stor = stone('my-db', persistence='level', encoder='pickle')
+# Create a new persistent dictionary, backed by LMDB
+stor = stone('my-db', LmdbStore, serialize='pickle')
 
 # You can use it just like a normal Python dict,
 # with the limitation that keys are bytes,
@@ -71,7 +71,7 @@ stor.get(b'li', False)
 # The data is persisted
 del stor
 # Re-create the store, using the same encoder
-stor = stone('my-db', persistence='level', encoder='pickle')
+stor = stone('my-db', LmdbStore, serialize='pickle')
 
 len(stor)
 # 2
