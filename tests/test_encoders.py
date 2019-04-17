@@ -20,6 +20,8 @@ def codec(request):
 @pytest.fixture(
     scope='function',
     params=[
+        True,
+        3.1415,
         b'qwe ASD 123',
         [b'x', b'qwerty'],
         {b'y', b'qwerty'},

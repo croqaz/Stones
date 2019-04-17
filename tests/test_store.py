@@ -2,15 +2,20 @@ import os
 import sys
 import pytest
 sys.path.insert(1, os.getcwd())
-from stones import MemoryStore as Store
+from stones import MemoryStore
+from stones import LmdbStore
 from common import *
 
 
-@pytest.fixture(scope='function')
-def stor():
-    d = Store()
-    repr(d)
-    yield d
+@pytest.fixture(scope='function', params=[
+    MemoryStore,
+    LmdbStore,
+])
+def stor(request):
+    m = request.param('test1')
+    print(repr(m))
+    yield m
+    m.destroy(yes_im_sure=True)
 
 
 def test_empty_db(stor):
@@ -26,7 +31,7 @@ def test_get_set(stor):
 
 
 def test_populate():
-    d = Store(iterable=[(b'a', b'b'), (b'c', b'd')])
+    d = MemoryStore(iterable=[(b'a', b'b'), (b'c', b'd')])
     assert len(d) == 2
     assert list(d.items()) == [(b'a', b'b'), (b'c', b'd')]
     d.update({b'a': b'x'})

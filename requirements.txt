@@ -9,6 +9,9 @@ codecov
 # git+https://github.com/ShinyTrinkets/Sticky
 
 
+# LMDB (optional)
+lmdb
+
 # UJSON (optional)
 ujson
 

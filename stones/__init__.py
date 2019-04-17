@@ -1,6 +1,7 @@
 # flake8: noqa
 
 from .memory import MemoryStore
+from .lmdb import LmdbStore
 from .serialize import serializers
 from .exceptions import EncoderException
 

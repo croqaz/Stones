@@ -111,6 +111,8 @@ def decode_json(data):
     JSON doesn't know how to deal with bytes and it needs help.
     """
     data = json.loads(data)
+    if isinstance(data, (bool, int, float)):
+        return data
     if isinstance(data, (bytes, str)):
         return ensure_bytes(data)
     if isinstance(data, dict):
