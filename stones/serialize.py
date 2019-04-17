@@ -86,9 +86,7 @@ def _restore_python_obj(data):
     Convert flagged list back to a Python object.
     Used by JSON and MsgPack.
     """
-    if isinstance(data, bytes):
-        return data
-    if isinstance(data, str):
+    if isinstance(data, (bytes, str)):
         return ensure_bytes(data)
     if isinstance(data, list):
         if data[0] == TUP_FLAG:
@@ -115,9 +113,7 @@ def decode_json(data):
     JSON doesn't know how to deal with bytes and it needs help.
     """
     data = json.loads(data)
-    if isinstance(data, bytes):
-        return data
-    if isinstance(data, str):
+    if isinstance(data, (bytes, str)):
         return ensure_bytes(data)
     if isinstance(data, dict):
         return {_restore_python_obj(k): _restore_python_obj(v) for k, v in data.items()}

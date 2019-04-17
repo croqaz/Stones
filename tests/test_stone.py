@@ -1,7 +1,5 @@
-
 import os
 import sys
-import shutil
 import pytest
 sys.path.insert(1, os.getcwd())
 from stones.serialize import *
