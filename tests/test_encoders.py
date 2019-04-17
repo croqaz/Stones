@@ -23,11 +23,14 @@ def codec(request):
         b'qwe ASD 123',
         [b'x', b'qwerty'],
         {b'y', b'qwerty'},
+        {True, False, None},
         (b'yes', b'no'),
+        (True, False, None),
         frozenset([b'q', b'e']),
         {
             b'yes': b'y',
-            b'no': b'n'
+            b'no': b'n',
+            b'maybe': 1
         },
     ])
 def value(request):

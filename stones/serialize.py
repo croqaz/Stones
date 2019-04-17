@@ -39,8 +39,6 @@ SET_FLAG = b'__{,}__'
 F_SET_FLAG = b'__f{}__'  # frozenset
 
 TUP_CBOR = 38
-SET_CBOR = 39
-F_SET_CBOR = 40
 
 
 def noop(data):
@@ -128,10 +126,6 @@ def _cbor_encoder(encoder, data):
     """
     if isinstance(data, tuple):
         encoder.encode(CBORTag(TUP_CBOR, list(data)))
-    if isinstance(data, set):
-        encoder.encode(CBORTag(SET_CBOR, sorted(data)))
-    if isinstance(data, frozenset):
-        encoder.encode(CBORTag(F_SET_CBOR, sorted(data)))
 
 
 def _cbor_decoder(decoder, tag, _):
@@ -140,10 +134,6 @@ def _cbor_decoder(decoder, tag, _):
     """
     if tag.tag == TUP_CBOR:
         return tuple(tag.value)
-    if tag.tag == SET_CBOR:
-        return set(tag.value)
-    if tag.tag == F_SET_CBOR:
-        return frozenset(tag.value)
 
 
 def encode_cbor(data):
