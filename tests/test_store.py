@@ -7,12 +7,16 @@ from stones import LmdbStore
 from common import *
 
 
-@pytest.fixture(scope='function', params=[
-    MemoryStore,
-    LmdbStore,
-])
+@pytest.fixture(scope='function',
+                params=[
+                    lambda: MemoryStore(serialize='json'),
+                    lambda: MemoryStore(serialize='json'),
+                    lambda: MemoryStore(serialize='pickle'),
+                    lambda: LmdbStore('test1', serialize='json'),
+                    lambda: LmdbStore('test2', serialize='pickle'),
+                ])
 def stor(request):
-    m = request.param('test1')
+    m = request.param()
     print(repr(m))
     yield m
     m.destroy(yes_im_sure=True)

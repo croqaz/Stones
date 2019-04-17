@@ -63,10 +63,13 @@ class MemoryStore(BaseStore):
         return list(self.db.keys())
 
     def values(self):
-        return list(self.db.values())
+        return [self._decode(v) for v in self.db.values()]
 
     def items(self):
-        return self.db.items()
+        items_list = []
+        for key, value in self.db.items():
+            items_list.append((key, self._decode(value)))
+        return items_list
 
     def update(self, iterable=tuple(), **kwargs):
         self._populate(iterable, **kwargs)

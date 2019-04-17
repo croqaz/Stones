@@ -16,11 +16,13 @@ def test_crash_base_store():
     # Invalid serializer name
     with pytest.raises(EncoderException):
         s = stone('a', serialize='xxx')
-    # Encoder required for sets and lists
+    # Encoder required for sets, lists, tuples
     with pytest.raises(EncoderException):
         s = stone('a', value_type=set, serialize=None, dump_load=None)
     with pytest.raises(EncoderException):
         s = stone('a', value_type=list, serialize=None, dump_load=None)
+    with pytest.raises(EncoderException):
+        s = stone('a', value_type=tuple, serialize=None, dump_load=None)
 
 
 def test_default_stone():
@@ -45,3 +47,5 @@ def test_serializer(codec):
     s = stone('a', serialize=codec)
     assert s._encode == globals()['encode_' + codec]
     assert isinstance(s, MemoryStore)
+    s[b'a'] = b'abc'
+    assert s[b'a'] == b'abc'
