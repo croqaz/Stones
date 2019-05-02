@@ -85,6 +85,7 @@ stor.keys()
 Python:
 
 * [TinyDB](https://github.com/msiemens/tinydb) - awesome lightweight document oriented database
+* [RaRe-Technologies/sqlitedict](https://github.com/RaRe-Technologies/sqlitedict) - Persistent dict backed by sqlite3 and pickle, multithread-safe
 * [Lukedeo/Cupboard](https://github.com/lukedeo/Cupboard) - store things in a variety of NoSQL KV stores
 * [Lcrees/Shove](https://bitbucket.org/lcrees/shove) - unmaintained (2 years)
 * [ShuhaoWu/Kvkit](https://github.com/shuhaowu/kvkit) - unmaintained (4 years)
