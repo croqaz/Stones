@@ -5,8 +5,6 @@ flake8
 pytest-cov
 # Dev coverage
 codecov
-# Stick headers
-# git+https://github.com/ShinyTrinkets/Sticky
 
 
 # LMDB (optional)
@@ -15,8 +13,8 @@ lmdb
 # UJSON (optional)
 ujson
 
-# SimpleJson (optional)
-# simplejson
+# orjson (optional)
+# orjson
 
 # CBOR2 (optional)
 cbor2 ~= 4.1

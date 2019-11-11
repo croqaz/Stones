@@ -1,7 +1,6 @@
-
 # 🗿Stones
 
-[![Build Status](https://travis-ci.org/croqaz/Stones.svg?branch=master)](https://travis-ci.org/croqaz/Stones) [![Codecov](https://codecov.io/gh/croqaz/Stones/branch/master/graph/badge.svg)](https://codecov.io/gh/croqaz/Stones) ![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)
+[![Build Status](https://travis-ci.org/croqaz/Stones.svg?branch=master)](https://travis-ci.org/croqaz/Stones) [![Codecov](https://codecov.io/gh/croqaz/Stones/branch/master/graph/badge.svg)](https://codecov.io/gh/croqaz/Stones) ![Python 3.7](https://img.shields.io/badge/python-3.7-blue.svg)
 
 > Base library for persistent key-value stores, 100% compatible with Python dict.
 
@@ -10,15 +9,12 @@
 The idea behind this project is to have a common interface for a multitude of persistent key-value stores, easy to use and extend, with some extra built-in features as bonus. Inspired from [Datastore](https://github.com/datastore/datastore) and [MemDown](https://github.com/level/memdown).
 
 
-⚠️ **This library is no longer maintained; PLEASE DON'T JUDGE** 🛑
-
-
 ## Features and Limitations
 
 - the same API that you already know from [Python dict](https://docs.python.org/3/library/stdtypes.html#mapping-types-dict)
 - thread safe updates
 - excellent test coverage (>90%)
-- the Memory Store and LMDB are available by default, to be used as an example. Other Stores _will be available soon_ ™ (LevelDB, DBM, Redis, etc).
+- the Memory Store and LMDB are available by default. Other Stores _might be available soon_ (LevelDB, DBM, Redis, etc).
 - 1st limitation: the keys can only be bytes. This is actually more of a feature.
 - 2nd limitation: the values are actually also bytes, but a serializer (default is Pickle) converts the data structure into bytes
 - there are several serializers available: Pickle, JSON and optional: cbor2, msgpack. You can easily add your own serializer, please check the documentation below.
@@ -27,7 +23,7 @@ The idea behind this project is to have a common interface for a multitude of pe
 
 ## Install
 
-This project uses [Python 3.6+](https://www.python.org/) and [pip](https://pip.pypa.io/). A [virtual environment](https://virtualenv.pypa.io/) is strongly encouraged.
+This project uses [Python 3.7+](https://www.python.org/) and [pip](https://pip.pypa.io/). A [virtual environment](https://virtualenv.pypa.io/) is strongly encouraged.
 
 ```sh
 $ pip install git+https://github.com/croqaz/Stones
@@ -87,8 +83,7 @@ Python:
 * [TinyDB](https://github.com/msiemens/tinydb) - awesome lightweight document oriented database
 * [RaRe-Technologies/sqlitedict](https://github.com/RaRe-Technologies/sqlitedict) - Persistent dict backed by sqlite3 and pickle, multithread-safe
 * [Lukedeo/Cupboard](https://github.com/lukedeo/Cupboard) - store things in a variety of NoSQL KV stores
-* [Lcrees/Shove](https://bitbucket.org/lcrees/shove) - unmaintained (2 years)
-* [ShuhaoWu/Kvkit](https://github.com/shuhaowu/kvkit) - unmaintained (4 years)
+* [ShuhaoWu/Kvkit](https://github.com/shuhaowu/kvkit) - unmaintained since 2014
 * [Datastore](https://github.com/datastore/datastore) - unmaintained since 2014
 * [Persistent dict ActiveState recipe](https://code.activestate.com/recipes/576642) - from 2009
 
