@@ -32,7 +32,7 @@ try:
     import msgpack
 except ModuleNotFoundError:
     msgpack = None
-    print('MessagePack can be installed at PyPi.python.org/pypi/msgpack-python')
+    print('MessagePack can be installed at PyPi.python.org/pypi/msgpack')
 
 TUP_FLAG = b'__(,)__'
 SET_FLAG = b'__{,}__'

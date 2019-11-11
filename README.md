@@ -97,4 +97,4 @@ Node.js:
 
 ## License
 
-[MIT](LICENSE) © 2017 Cristi Constantin.
+[MIT](LICENSE) © Cristi Constantin.
