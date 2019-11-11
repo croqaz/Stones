@@ -30,16 +30,17 @@ class MemoryStore(BaseStore):
             self.db[key] = self._encode(value)
 
     def get(self, key, default=None):
-        encoded_value = self.db.get(key)
+        encoded_value = self.db.get(self._enc_key(key))
         return self._decode(encoded_value) if encoded_value else default
 
     def put(self, key, value, overwrite=True):
-        if not overwrite and self.db.get(key):
+        enc_key = self._enc_key(key)
+        if not overwrite and self.db.get(enc_key):
             return
-        self.db[key] = self._encode(value)
+        self.db[enc_key] = self._encode(value)
 
     def delete(self, key):
-        del self.db[key]
+        del self.db[self._enc_key(key)]
 
     __getitem__ = get
 
@@ -48,7 +49,7 @@ class MemoryStore(BaseStore):
     __delitem__ = delete
 
     def __contains__(self, key):
-        return key in self.db
+        return self._enc_key(key) in self.db
 
     def __len__(self):
         return len(self.db)

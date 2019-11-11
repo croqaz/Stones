@@ -8,6 +8,8 @@
 
 The idea behind this project is to have a common interface for a multitude of persistent key-value stores, easy to use and extend, with some extra built-in features as bonus. Inspired from [Datastore](https://github.com/datastore/datastore) and [MemDown](https://github.com/level/memdown).
 
+It plays nice with Object Querying libraries like: [JMESPath](http://jmespath.org/) and [ObjectPath](http://objectpath.org/).
+
 
 ## Features and Limitations
 
@@ -15,7 +17,7 @@ The idea behind this project is to have a common interface for a multitude of pe
 - thread safe updates
 - excellent test coverage (>90%)
 - the Memory Store and LMDB are available by default. Other Stores _might be available soon_ (LevelDB, DBM, Redis, etc).
-- 1st limitation: the keys can only be bytes. This is actually more of a feature.
+- 1st limitation: the keys can only be bytes. They are converted from str to bytes for compatibility.
 - 2nd limitation: the values are actually also bytes, but a serializer (default is Pickle) converts the data structure into bytes
 - there are several serializers available: Pickle, JSON and optional: cbor2, msgpack. You can easily add your own serializer, please check the documentation below.
 - 3rd limitation: after the data was serialized, you have to continue using the same serializer. If for some reason, you want to switch the serializer, you can create a new Store with your new serializer and copy all the data from the old Store.

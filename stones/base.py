@@ -22,6 +22,11 @@ class BaseStore(MutableMapping):
         else:
             raise EncoderException('The store needs an encoder and a decoder')
 
+    def _enc_key(self, k):
+        if isinstance(k, str):
+            return k.encode('utf8')
+        return k
+
     def get(self, key):
         raise NotImplementedError
 

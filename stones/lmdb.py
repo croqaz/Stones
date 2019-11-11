@@ -51,31 +51,33 @@ class LmdbStore(BaseStore):
 
     def get(self, key, default=None):
         with self.db.begin(db=self.table) as txn:
-            encoded_value = txn.get(key, None)
+            encoded_value = txn.get(self._enc_key(key), None)
             return self._decode(encoded_value) if encoded_value else default
 
-    def put(self, key, value, dupdata=False, overwrite=False):
+    def put(self, key, value, overwrite=False):
+        enc_key = self._enc_key(key)
         with self.db.begin(write=True, db=self.table) as txn:
-            txn.put(key, self._encode(value), dupdata=dupdata, overwrite=overwrite)
+            txn.put(enc_key, self._encode(value), overwrite=overwrite, dupdata=False)
 
     def delete(self, key):
         with self.db.begin(write=True, db=self.table) as txn:
-            return txn.delete(key)
+            return txn.delete(self._enc_key(key))
 
     def __getitem__(self, key):
         with self.db.begin(db=self.table) as txn:
-            encoded_value = txn.get(key)
+            encoded_value = txn.get(self._enc_key(key))
             return self._decode(encoded_value)
 
     def __setitem__(self, key, value):
         with self.db.begin(write=True, db=self.table) as txn:
-            txn.put(key, self._encode(value), dupdata=False)
+            txn.put(self._enc_key(key), self._encode(value), dupdata=False)
 
     __delitem__ = delete
 
     def __contains__(self, key):
+        enc_key = self._enc_key(key)
         with self.db.begin(db=self.table) as txn:
-            return bool(txn.get(key))
+            return bool(txn.get(enc_key))
 
     def __len__(self):
         with self.db.begin(db=self.table) as txn:

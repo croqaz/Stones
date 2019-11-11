@@ -29,6 +29,10 @@ def check_get_put(stor):
     # Value not changed
     assert stor.get(b'a') == b'a'
 
+    # string key
+    stor.put('a', b'zz', overwrite=True)
+    assert stor.get('a') == b'zz'
+
     stor.put(b'a', b'aa', overwrite=True)
     # Overwrite old value
     assert len(stor) == 1
@@ -52,6 +56,10 @@ def check_get_set(stor):
     assert b'a' in stor
     assert len(stor) == 1
     assert stor[b'a'] == b'a'
+
+    # string key
+    stor['a'] = b'a'
+    assert 'a' in stor
 
     stor[b'a'] = True
     assert len(stor) == 1
@@ -106,6 +114,11 @@ def check_delete(stor):
     assert len(stor) == 1
 
     del stor[b'x']
+    assert len(stor) == 0
+
+    # string key
+    stor['x'] = b'xyz'
+    del stor['x']
     assert len(stor) == 0
 
     assert stor.get(b'a') is None
