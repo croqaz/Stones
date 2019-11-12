@@ -4,7 +4,7 @@
 # https://github.com/kennethreitz/setup.py ❤️ ✨ 🍰 ✨
 
 import os
-from setuptools import setup
+from setuptools import setup, find_packages
 
 NAME = 'stones'
 DESCRIPTION = 'Persistent key-value containers, compatible with Python dict.'
@@ -22,13 +22,15 @@ with open(os.path.join(here, NAME, '__version__.py')) as f:
 setup(
     version=about['__version__'],
     name=NAME,
-    description=DESCRIPTION,
+    description='Base library for persistent key-value stores, 100% compatible with Python dict',
+    long_description=DESCRIPTION,
+    long_description_content_type='text/markdown',
     keywords=KEYWORDS,
     url=URL,
     author=AUTHOR,
     author_email=EMAIL,
     license='MIT',
-    packages=['stones', 'tests'],
+    packages=find_packages(exclude=['tests']),
     include_package_data=True,
     zip_safe=True,
     python_requires='>= 3.6',
