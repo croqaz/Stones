@@ -9,15 +9,3 @@ codecov
 
 # LMDB (optional)
 lmdb
-
-# UJSON (optional)
-ujson
-
-# orjson (optional)
-# orjson
-
-# CBOR2 (optional)
-cbor2 ~= 4.1
-
-# Msgpack (optional)
-msgpack ~= 0.6

@@ -18,6 +18,7 @@ clean:
 
 update:
 	${ENV}pip install -U -r requirements.txt
+	${ENV}pip install -U -r requirements-full.txt
 
 lint:
 	${ENV}flake8 stones

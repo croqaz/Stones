@@ -6,7 +6,7 @@ from .base import BaseStore
 try:
     import lmdb
 except ModuleNotFoundError:
-    print('LevelDB store requires PyPi.python.org/pypi/lmdb')
+    print('LMDB store requires PyPi.python.org/pypi/lmdb')
 
 
 class LmdbStore(BaseStore):
