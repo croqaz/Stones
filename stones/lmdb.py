@@ -8,6 +8,8 @@ try:
 except ModuleNotFoundError:
     print('LMDB store requires PyPi.python.org/pypi/lmdb')
 
+LMDB_ENVIRONMENT = {'max_dbs': 9, 'map_size': 8e12}
+
 
 class LmdbStore(BaseStore):
     """
@@ -24,10 +26,11 @@ class LmdbStore(BaseStore):
                  dump_load=tuple(),
                  value_type=bytes,
                  iterable=tuple(),
+                 database={},
                  kwargs={}):
         super().__init__(serialize=serialize, dump_load=dump_load, value_type=value_type)
         self._name = name + '.lmdb'
-        self.db = lmdb.open(self._name, max_dbs=9, map_size=8e12)
+        self.db = lmdb.open(self._name, **{**LMDB_ENVIRONMENT, **database})
         self.table = self.db.open_db(table)
         if iterable or kwargs:
             self._populate(iterable, **kwargs)
