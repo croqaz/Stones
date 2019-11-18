@@ -29,7 +29,7 @@ class LmdbStore(BaseStore):
                  database={},
                  kwargs={}):
         super().__init__(serialize=serialize, dump_load=dump_load, value_type=value_type)
-        self._name = name + '.lmdb'
+        self._name = name
         self.db = lmdb.open(self._name, **{**LMDB_ENVIRONMENT, **database})
         self.table = self.db.open_db(table)
         if iterable or kwargs:
