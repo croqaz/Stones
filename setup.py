@@ -7,7 +7,7 @@ import os
 from setuptools import setup, find_packages
 
 NAME = 'stones'
-DESCRIPTION = 'Persistent key-value containers, compatible with Python dict.'
+DESCRIPTION = 'Library for Persistent key-value containers, compatible with Python dict.'
 KEYWORDS = 'persistent dict'
 URL = 'https://github.com/croqaz/Stones'
 AUTHOR = 'Cristi Constantin'
@@ -16,14 +16,20 @@ EMAIL = 'cristi.constantin@speedpost.net'
 here = os.path.abspath(os.path.dirname(__file__))
 about = {}
 
+try:
+    with open(os.path.join(here, 'README.md')) as f:
+        long_description = '\n' + f.read()
+except FileNotFoundError:
+    long_description = DESCRIPTION
+
 with open(os.path.join(here, NAME, '__version__.py')) as f:
     exec(f.read(), about)
 
 setup(
     version=about['__version__'],
     name=NAME,
-    description='Base library for persistent key-value stores, 100% compatible with Python dict',
-    long_description=DESCRIPTION,
+    description=DESCRIPTION,
+    long_description=long_description,
     long_description_content_type='text/markdown',
     keywords=KEYWORDS,
     url=URL,
