@@ -8,7 +8,7 @@
 
 The idea behind this project is to have a common interface for a multitude of persistent key-value stores, easy to use and extend, with some extra built-in features as bonus. Inspired from [Datastore](https://github.com/datastore/datastore) and [MemDown](https://github.com/level/memdown).
 
-It plays nice with Object Querying libraries like: [JMESPath](http://jmespath.org/) and [ObjectPath](http://objectpath.org/).
+It plays nice with Object Querying libraries like: [JMESPath](http://jmespath.org/), or [JSONPath RW](https://github.com/kennknowles/python-jsonpath-rw), or [ObjectPath](http://objectpath.org/).
 
 
 ## Features and Limitations
@@ -25,10 +25,11 @@ It plays nice with Object Querying libraries like: [JMESPath](http://jmespath.or
 
 ## Install
 
-This project uses [Python 3.6+](https://python.org/) and [pip](https://pip.pypa.io/). A [virtual environment](https://virtualenv.pypa.io/) is strongly encouraged.
+This project uses [Python 3.6+](https://python.org/) and [pip](https://pip.pypa.io/).
+A [virtual environment](https://virtualenv.pypa.io/) is strongly encouraged.
 
 ```sh
-$ pip install git+https://github.com/croqaz/Stones
+$ pip install stones
 ```
 
 
