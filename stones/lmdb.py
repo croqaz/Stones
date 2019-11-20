@@ -95,18 +95,13 @@ class LmdbStore(BaseStore):
         return self.__class__.__name__ + repr(items)
 
     def keys(self):
-        keys_list = []
         with self.db.begin(db=self.table) as txn:
-            for key in txn.cursor().iternext(keys=True, values=False):
-                keys_list.append(key)
-        return keys_list
+            yield from txn.cursor().iternext(keys=True, values=False)
 
     def values(self):
-        vals_list = []
         with self.db.begin(db=self.table) as txn:
             for value in txn.cursor().iternext(keys=False, values=True):
-                vals_list.append(self._decode(value))
-        return vals_list
+                yield self._decode(value)
 
     def items(self):
         items_list = []

@@ -61,10 +61,10 @@ class MemoryStore(BaseStore):
         return self.__class__.__name__ + repr(self.db)
 
     def keys(self):
-        return list(self.db.keys())
+        return self.db.keys()
 
     def values(self):
-        return [self._decode(v) for v in self.db.values()]
+        return (self._decode(v) for v in self.db.values())
 
     def items(self):
         items_list = []
