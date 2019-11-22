@@ -93,6 +93,7 @@ Python:
 Node.js:
 
 * [MemDown](https://github.com/level/memdown) - abstract LevelDown store for Node.js and browsers
+* [AppStorage](https://github.com/faressoft/appstorage) - LocalStorage for Node.js, auto syncing objects with JSON files
 * [NeDB](https://github.com/louischatriot/nedb) - embedded database for Node.js, nw.js, Electron and browsers
 * [FortuneJS](https://github.com/fortunejs/fortune) - database abstraction layer with a common interface for databases
 * [PouchDB](https://github.com/pouchdb/pouchdb) - pocket-sized database

@@ -18,7 +18,7 @@ except ModuleNotFoundError:
         # Second fast JSON encoder and decoder
         import simplejson as json
     except ModuleNotFoundError:
-        print('For better performance using JSON, install either UJSON or simplejson')
+        # print('For better performance using JSON, install either UJSON or simplejson')
         import json
 
 try:
@@ -26,13 +26,13 @@ try:
     from cbor2.types import CBORTag
 except ModuleNotFoundError:
     cbor2 = None
-    print('CBOR can be installed at PyPi.python.org/pypi/cbor2')
+    # print('CBOR can be installed at PyPi.python.org/pypi/cbor2')
 
 try:
     import msgpack
 except ModuleNotFoundError:
     msgpack = None
-    print('MessagePack can be installed at PyPi.python.org/pypi/msgpack')
+    # print('MessagePack can be installed at PyPi.python.org/pypi/msgpack')
 
 TUP_FLAG = b'__(,)__'
 SET_FLAG = b'__{,}__'
