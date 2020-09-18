@@ -98,6 +98,7 @@ Node.js:
 * [NeDB](https://github.com/louischatriot/nedb) - embedded database for Node.js, nw.js, Electron and browsers
 * [FortuneJS](https://github.com/fortunejs/fortune) - database abstraction layer with a common interface for databases
 * [PouchDB](https://github.com/pouchdb/pouchdb) - pocket-sized database
+* [ToiletDB](https://github.com/maxogden/toiletdb) - flushes an object to a JSON file
 * [whatDB](https://github.com/small-tech/whatdb) - in-memory JavaScript database for Small Web applications that persists to JSON files
 
 Other:
