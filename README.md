@@ -84,6 +84,7 @@ stor.keys()
 Python:
 
 * [TinyDB](https://github.com/msiemens/tinydb) - awesome lightweight document oriented database
+* [RocksDict](https://github.com/Congyuwang/RocksDict) - Key-value storage supporting any Python object
 * [RaRe-Technologies/sqlitedict](https://github.com/RaRe-Technologies/sqlitedict) - Persistent dict backed by sqlite3 and pickle, multithread-safe
 * [Lukedeo/Cupboard](https://github.com/lukedeo/Cupboard) - store things in a variety of NoSQL KV stores
 * [ShuhaoWu/Kvkit](https://github.com/shuhaowu/kvkit) - unmaintained since 2014
