@@ -93,8 +93,9 @@ Python:
 
 Node.js:
 
-* [MemDown](https://github.com/level/memdown) - abstract LevelDown store for Node.js and browsers
+* [lowDB](https://github.com/typicode/lowdb) - simple to use local JSON database. Powered by plain JS.
 * [Keyv](https://github.com/lukechilds/keyv) - Key-value storage across multiple backends via storage adapters. Supports TTL based expiry, making it suitable as a cache or a persistent key-value store.
+* [MemDown](https://github.com/level/memdown) - abstract LevelDown store for Node.js and browsers
 * [AppStorage](https://github.com/faressoft/appstorage) - LocalStorage for Node.js, auto syncing objects with JSON files
 * [NeDB](https://github.com/louischatriot/nedb) - embedded database for Node.js, nw.js, Electron and browsers
 * [FortuneJS](https://github.com/fortunejs/fortune) - database abstraction layer with a common interface for databases
