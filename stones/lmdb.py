@@ -8,7 +8,7 @@ try:
 except ModuleNotFoundError:
     print('LMDB store requires PyPi.python.org/pypi/lmdb')
 
-LMDB_ENVIRONMENT = {'max_dbs': 9, 'map_size': 8e12}
+LMDB_ENVIRONMENT = {'max_dbs': 9, 'map_size': int(8e12)}
 
 
 class LmdbStore(BaseStore):
