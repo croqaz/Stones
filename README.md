@@ -1,6 +1,6 @@
 # 🗿Stones
 
-[![Build Status](https://travis-ci.org/croqaz/Stones.svg?branch=master)](https://travis-ci.org/croqaz/Stones) [![Codecov](https://codecov.io/gh/croqaz/Stones/branch/master/graph/badge.svg)](https://codecov.io/gh/croqaz/Stones) ![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)
+[![Build Status](https://travis-ci.org/croqaz/Stones.svg?branch=master)](https://travis-ci.org/croqaz/Stones) [![Codecov](https://codecov.io/gh/croqaz/Stones/branch/master/graph/badge.svg)](https://codecov.io/gh/croqaz/Stones) ![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)
 
 > Base library for persistent key-value stores, 100% compatible with Python dict.
 
@@ -25,10 +25,11 @@ It plays nice with Object Querying libraries like: [JMESPath](http://jmespath.or
 
 ## Install
 
-This project uses [Python 3.6+](https://python.org/) and [pip](https://pip.pypa.io/).
-A [virtual environment](https://virtualenv.pypa.io/) is strongly encouraged.
+This project uses [Python 3.9+](https://python.org/) and [Poetry](https://python-poetry.org/), or [pip](https://pip.pypa.io/).
 
 ```sh
+$ poetry add stones
+# or
 $ pip install stones
 ```
 
