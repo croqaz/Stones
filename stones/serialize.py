@@ -7,23 +7,21 @@ the `tuple`, `set` and `frozenset` are also supported.
 """
 
 import pickle
-from io import BytesIO
+from functools import partial
 from .util import ensure_bytes
 
+import json
 try:
     # Ultra fast JSON encoder and decoder
-    import ujson as json
+    import ujson
+    json.dumps = partial(ujson.dumps, reject_bytes=False)
 except ModuleNotFoundError:
-    try:
-        # Second fast JSON encoder and decoder
-        import simplejson as json
-    except ModuleNotFoundError:
-        # print('For better performance using JSON, install either UJSON or simplejson')
-        import json
+    # print('For better performance using JSON, install either UJSON or simplejson')
+    pass
 
 try:
     import cbor2
-    from cbor2.types import CBORTag
+    from cbor2 import CBORTag
 except ModuleNotFoundError:
     cbor2 = None
     # print('CBOR can be installed at PyPi.python.org/pypi/cbor2')
@@ -102,6 +100,8 @@ def encode_json(data):
     Convert special Python iterable into list.
     """
     data = _convert_python_obj(data)
+    if isinstance(data, bytes):
+        data = data.decode('utf8')
     return ensure_bytes(json.dumps(data))
 
 
@@ -120,17 +120,7 @@ def decode_json(data):
     return _restore_python_obj([_restore_python_obj(e) for e in data])
 
 
-def _cbor_encoder(encoder, data):
-    """
-    Hook to convert tuples and sets into lists.
-    The list of CBOR tags:
-    http://cbor2.readthedocs.io/en/latest/usage.html#tag-support
-    """
-    if isinstance(data, tuple):
-        encoder.encode(CBORTag(TUP_CBOR, list(data)))
-
-
-def _cbor_decoder(decoder, tag, _):
+def _cbor_decoder(decoder, tag):
     """
     Hook to convert lists into their original objects.
     """
@@ -144,11 +134,9 @@ def encode_cbor(data):
     The CBOR Encoder is needed to revert the default
     behaviour of treating tuples like normal lists.
     """
-    mem_file = BytesIO()
-    encoder = cbor2.CBOREncoder(mem_file, default=_cbor_encoder)
-    del encoder._encoders[tuple]  # Enable the default callback
-    encoder.encode(data)
-    return mem_file.getvalue()
+    if isinstance(data, tuple):
+        data = CBORTag(TUP_CBOR, list(data))
+    return cbor2.dumps(data)
 
 
 def decode_cbor(data):

@@ -1,0 +1,56 @@
+[tool.poetry]
+name = "stones"
+version = "0.1.4"
+description = "Library for Persistent key-value containers, compatible with Python dict"
+authors = ["Cristi Constantin"]
+license = "MIT"
+
+packages = [
+    { include = "stones" },
+]
+
+repository = "https://github.com/croqaz/Stones"
+homepage = "https://github.com/croqaz/Stones"
+
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.11"
+lmdb = "1.3.0"
+
+ujson = {version = "^5.4.0", optional = true}
+cbor2 = {version = "^5.4.3", optional = true}
+msgpack = {version = "^1.0.4", optional = true}
+
+[tool.poetry.dev-dependencies]
+pytest = "7.1.2"
+pytest-cov = "3.0.0"
+codecov = "2.1.12"
+Flake8-pyproject = "^1.0.0"
+
+[tool.flake8]
+max-line-length = 120
+per-file-ignores = [
+    "__init__.py:F4",
+]
+extend-ignore = [
+    "E121",  # continuation line under-indented for hanging indent
+    "E128",  # continuation line under-indented for visual indent
+]
+extend-exclude = [
+    "*.egg-info",
+    "dist",
+]
+
+[tool.coverage.report]
+ignore_errors = true
+exclude_lines = [
+    "__version__",
+    "def __repr__",
+    "def __str__",
+    "if TYPE_CHECKING:",
+    "if __name__ == __main__:",
+    "pragma: no cover",
+    "raise ModuleNotFoundError.+",
+    "raise NotImplementedError.+",
+    "warnings\\.warn.+",
+]

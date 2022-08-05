@@ -1,0 +1,39 @@
+name: Python
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: 3.9
+
+    - name: Install dependencies
+      run: |
+        curl -sSL https://install.python-poetry.org | python -
+        poetry install
+        poetry run python -m pip install ujson cbor2 msgpack
+
+    - name: Lint code
+      run: |
+        make lint
+
+    - name: Run tests
+      run: |
+        make test
+
+    - name: Run coverage
+      run: |
+        # make coverage
+
+    - name: Publish coverage
+      uses: codecov/codecov-action@v2
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
