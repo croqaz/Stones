@@ -31,7 +31,7 @@ jobs:
 
     - name: Run coverage
       run: |
-        # make coverage
+        make coverage
 
     - name: Publish coverage
       uses: codecov/codecov-action@v2

@@ -18,7 +18,6 @@ lint:
 	poetry run python -m flake8p stones
 
 coverage:
-	${ENV}pytest --cov-report term --cov=stones tests/
 	poetry run python -m pytest --cov-report term --cov-report xml --cov=stones/ tests/
 
 test:
