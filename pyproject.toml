@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "stones"
-version = "0.1.4"
+version = "0.2"
 description = "Library for Persistent key-value containers, compatible with Python dict"
 authors = ["Cristi Constantin"]
 license = "MIT"
