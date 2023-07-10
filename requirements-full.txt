@@ -1,9 +1,0 @@
-
-# UJSON (optional)
-ujson ~= 5.4
-
-# CBOR2 (optional)
-cbor2 ~= 5.4
-
-# Msgpack (optional)
-msgpack ~= 1.0

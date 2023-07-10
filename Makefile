@@ -2,6 +2,8 @@
 
 clean:
 	rm -rf `find . -name __pycache__`
+	rm -rf `find . -name .mypy_cache`
+	rm -rf `find . -name .pytest_cache`
 	rm -f `find . -type f -name '*.py[co]' `
 	rm -f `find . -type f -name '*~' `
 	rm -f `find . -type f -name '.*~' `
@@ -18,7 +20,7 @@ lint:
 	poetry run python -m flake8p stones
 
 coverage:
-	poetry run python -m pytest --cov-report term --cov-report xml --cov=stones/ tests/
+	poetry run python -m pytest --cov-report term --cov=stones/ tests/
 
 test:
 	poetry run python -m pytest -ra -sv tests/
