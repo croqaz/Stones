@@ -1,6 +1,6 @@
 # 🗿Stones
 
-[![Build Status](https://travis-ci.org/croqaz/Stones.svg?branch=master)](https://travis-ci.org/croqaz/Stones) [![Codecov](https://codecov.io/gh/croqaz/Stones/branch/master/graph/badge.svg)](https://codecov.io/gh/croqaz/Stones) ![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)
+[![Build Status](https://github.com/croqaz/Stones/actions/workflows/python.yml/badge.svg)](https://github.com/croqaz/Stones/actions/workflows/python.yml) [![Codecov](https://codecov.io/gh/croqaz/Stones/branch/master/graph/badge.svg)](https://codecov.io/gh/croqaz/Stones) ![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)
 
 > Base library for persistent key-value stores, 100% compatible with Python dict.
 
