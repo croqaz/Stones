@@ -17,10 +17,10 @@ clean:
 	rm -rf cover
 
 lint:
-	poetry run python -m flake8p stones
+	python -m flake8p stones
 
 coverage:
-	poetry run python -m pytest --cov-report term --cov=stones/ tests/
+	python -m pytest --cov-report term --cov=stones/ tests/
 
 test:
-	poetry run python -m pytest -ra -sv tests/
+	python -m pytest -ra -sv tests/
