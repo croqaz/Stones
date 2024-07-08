@@ -25,11 +25,9 @@ It plays nice with Object Querying libraries like: [JMESPath](http://jmespath.or
 
 ## Install
 
-This project uses [Python 3.9+](https://python.org/) and [Poetry](https://python-poetry.org/), or [pip](https://pip.pypa.io/).
+This project uses [Python 3.10+](https://python.org/), or [pip](https://pip.pypa.io/).
 
 ```sh
-$ poetry add stones
-# or
 $ pip install stones
 ```
 
