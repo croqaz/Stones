@@ -7,6 +7,7 @@ build-backend = "setuptools.build_meta"
 name = "stones"
 version = "0.3.0"
 description = "Library for Persistent key-value containers, compatible with Python dict"
+readme = "README.md"
 authors = [{name = "Cristi Constantin"}]
 license = {file = "LICENSE"}
 
